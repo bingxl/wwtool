@@ -8,9 +8,7 @@ on:
 jobs:
   build-windows:
     runs-on: windows-latest
-    env:
-      APPNAME: wwtool.exe
-
+    
     steps:
     - name: Checkout code
       uses: actions/checkout@v4
@@ -34,16 +32,17 @@ jobs:
     - name: Install UPX
       run: choco install upx -y
 
-    - name: Install Fyne CLI
-      run: go install fyne.io/tools/cmd/fyne@latest
+    # - name: Install Fyne CLI
+    #   run: go install fyne.io/tools/cmd/fyne@latest
 
     - name: Build Windows executable with Fyne
-      run: fyne package -os windows -icon Icon.ico -name $APPNAME
+      # run: fyne package -os windows -icon Icon.ico -name wwtool.exe
+      run: go build -ldflags="-s -w -H windowsgui" -o wwtool.exe .
 
     - name: Compress executable with UPX
-      run: upx --best --lzma $APPNAME
+      run: upx --best --lzma wwtool.exe
 
     - name: Create GitHub Release and Upload Assets
       uses: softprops/action-gh-release@v2
       with:
-        files: $APPNAME
+        files: wwtool.exe
