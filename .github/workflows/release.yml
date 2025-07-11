@@ -37,14 +37,8 @@ jobs:
     - name: Install Fyne CLI
       run: go install fyne.io/tools/cmd/fyne@latest
 
-    # - name: Add Go bin to PATH
-    #   shell: pwsh
-    #   run: |
-    #     $env:GOPATH = $(go env GOPATH)
-    #     echo "$env:GOPATH\bin" | Out-File -FilePath $Env:GITHUB_PATH -Encoding utf8 -Append
-
     - name: Build Windows executable with Fyne
-      run: fyne package --os windows --arch amd64 -name $APPNAME
+      run: fyne package -os windows -icon Icon.ico -name $APPNAME
 
     - name: Compress executable with UPX
       run: upx --best --lzma $APPNAME
