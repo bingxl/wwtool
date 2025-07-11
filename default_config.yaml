@@ -1,0 +1,6 @@
+game-paths:
+    - C:/Program Files/Wuthering Waves/Wuthering Waves Game
+last-selected-path: 0
+exe-name: "Wuthering Waves.exe"
+link-server: {}
+link-src-path: Client/Binaries/Win64/ThirdParty/KrPcSdk_Mainland
