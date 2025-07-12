@@ -18,13 +18,19 @@ jobs:
       with:
         go-version: 'stable'
 
+    - name: Get Go paths
+      id: go-env
+      shell: bash
+      run: |
+        echo "GOCACHE=$(go env GOCACHE)" >> $GITHUB_OUTPUT
+        echo "GOMODCACHE=$(go env GOMODCACHE)" >> $GITHUB_OUTPUT
+
     - name: Cache Go modules and Fyne CLI
       uses: actions/cache@v4
       with:
         path: |
-          ~/.cache/go-build
-          ~/go/pkg/mod
-          ~/go/bin
+          ${{ steps.go-env.outputs.GOCACHE }}
+          ${{ steps.go-env.outputs.GOMODCACHE }}
         key: ${{ runner.os }}-go-${{ hashFiles('**/go.sum') }}
         restore-keys: |
           ${{ runner.os }}-go-
