@@ -1,9 +1,0 @@
-game-paths:
-    - C:/program/games/wuwa-overseas/Wuthering Waves Game
-    - C:/program/games/Wuthering Waves/Wuthering Waves Game
-exe-name: Wuthering Waves.exe
-link-servers:
-    bili: C:/program/games/wuwa-diff/KrPcSdk_Mainland-bili
-    cn: C:/program/games/wuwa-diff/KrPcSdk_Mainland-official
-last-selected-path: 1
-link-src-path: Client/Binaries/Win64/ThirdParty/KrPcSdk_Mainland

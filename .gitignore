@@ -1,2 +1,4 @@
 wwtool.exe
 tmp
+config.yaml
+cmd/lib/path*
