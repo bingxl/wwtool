@@ -1,15 +1,11 @@
 package view
 
 import (
-	"embed"
 	"strings"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/widget"
 )
-
-//go:embed help.md
-var helpFile embed.FS
 
 type helpDocT struct {
 	title   string
@@ -44,14 +40,8 @@ func getHelpDocs() []helpDocT {
 		},
 		{title: "B服官服切换",
 			content: []string{
-				"点击`添加diff路径`， 输入名称（名称方便自己区分，比如",
-				"以下步骤以已有官服来操作",
-				"1. 将游戏目录下的 `Client/Binaries/Win64/ThirdParty/KrPcSdk_Mainland` 目录移动一个单独位置， 例如 `C:/ww-diff/KrPcSdk_Mainland_official`",
-				"2. 下载b服鸣潮启动器，定位到游戏本体，修复游戏",
-				"3. 将游戏目录下的 `Client/Binaries/Win64/ThirdParty/KrPcSdk_Mainland` 目录移动一个单独位置， 例如 `C:/ww-diff/KrPcSdk_Mainland_bilibili`",
-				"4. 点击`添加diff路径`， 输入名称（名称方便自己区分，比如 official bilibili）， 选择`软链接路径` 选择第1步或第3步移动到的路径， 点击添加",
-				"5. 选择名称，点击`创建软链接`",
-				"其中1-4步只有第一次需要操作，之后切换时只需要操作第5步",
+				"首次运行时点击切换到官服，运行官方启动器，修复游戏；修复完成后点击切换到bilibili服，运行b服启动器，修复游戏",
+				"之后的切换只需要点击对应的服就可以",
 			},
 		},
 		{title: "抽卡链接获取",

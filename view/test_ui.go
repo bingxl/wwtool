@@ -54,7 +54,7 @@ func ToolBar() fyne.CanvasObject {
 		widget.NewToolbarAction(theme.DocumentSaveIcon(), func() {
 			label.SetText("Save clicked")
 		}),
-		widget.NewToolbarSeparator(),
+		// widget.NewToolbarSeparator(),
 		widget.NewToolbarAction(theme.SettingsIcon(), func() {
 			label.SetText("Settings clicked")
 		}),

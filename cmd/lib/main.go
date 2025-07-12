@@ -5,6 +5,7 @@ import (
 	"fmt"
 	"log/slog"
 	"os"
+	"path/filepath"
 	"strings"
 
 	"wwtool/card"
@@ -36,6 +37,7 @@ var operationMap = map[string]func(){
 
 	// 退出程序
 	"q": func() { os.Exit(0) },
+	"t": test,
 }
 
 func main() {
@@ -49,7 +51,6 @@ func main() {
 	for {
 		operation()
 	}
-	// test()
 }
 
 // 创建软链接
@@ -66,7 +67,7 @@ func changeLink(server string) {
 	)
 
 	// 创建新的软链接
-	err := lib.CreateSymlink(linkPath, targetPath)
+	err := lib.CreateSymlink(linkPath, targetPath, false)
 	if err != nil {
 		slog.Error("Failed to create symlink", "error", err)
 	} else {
@@ -82,6 +83,7 @@ func operation() {
 	fmt.Println("1. 切换到官服")
 	fmt.Println("2. 切换到B服")
 	fmt.Println("3. 输出抽卡链接")
+	fmt.Println("t. run test function")
 	fmt.Println("q. 退出程序")
 	fmt.Print("输入数字选择 (默认1): ")
 	input, _ := reader.ReadString('\n')
@@ -113,10 +115,33 @@ func test() {
 		"error", err,
 	)
 	fmt.Println("creating symlink")
-	fmt.Println(lib.CreateSymlink(src, path2))
+	fmt.Println(lib.CreateSymlink(src, path2, false))
+	real, err := filepath.EvalSymlinks(src)
+	slog.Info("real path",
+		"src", src,
+		"path2", path2,
+		"real", real,
+	)
+	real, err = filepath.EvalSymlinks("pathtest")
+	slog.Info("real path",
+		"path2", path2,
+		"real", real,
+		"error", err,
+	)
 
 	// fmt.Println("creating symlink from", src, "to", path3)
 	// fmt.Println(lib.CreateSymlink(src, path3))
 
-	lib.CreateSymlink(src, "path4")
+	lib.CreateSymlink(src, "path4", false)
+
+	preDefinePath := map[string]func() (string, error){
+		"userConfigDir": os.UserConfigDir,
+		"userCacheDir":  os.UserCacheDir,
+		"userHomeDir":   os.UserHomeDir,
+		"TempDir":       func() (string, error) { return os.TempDir(), nil },
+	}
+	for key, v := range preDefinePath {
+		dir, _ := v()
+		slog.Info("预定义路径", key, dir)
+	}
 }

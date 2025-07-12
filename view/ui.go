@@ -1,12 +1,12 @@
 package view
 
 import (
+	"fmt"
 	"log/slog"
 	"slices"
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/data/binding"
 	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/widget"
 
@@ -87,104 +87,53 @@ func GameSelectorUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObje
 // 软链接格式为 {name: path}，name 是服务器简称，path 是软链接路径
 // 选中某个服务器后，可以删除或修改其软链接路径
 func changeServerUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObject {
-	tmpLinkAddr := ""
-	tmpLinkName := binding.NewString()
-	selectedServer := ""
 
-	rg := widget.NewRadioGroup([]string{}, func(selected string) {
-		if selected == "" {
-			return
-		}
-		selectedServer = selected
-		slog.Info("选中服务器", "server", selectedServer)
-	})
-	updateRg := func() {
-		for server := range vm.LinkServers {
-			if !slices.Contains(rg.Options, server) {
-				rg.Append(server)
-			}
-		}
-		rg.Refresh()
-	}
-	updateRg()
-
-	addServer := func() {
-		tmpLinkAddr = ""
-		tmpLinkName.Set("")
-
-		dialog.ShowForm(
-			"添加软链接",
-			"添加",
-			"取消",
-			[]*widget.FormItem{
-				widget.NewFormItem("简称", widget.NewEntryWithData(tmpLinkName)),
-				widget.NewFormItem("软链接路径",
-					widget.NewButton(
-						"点击",
-						func() {
-							dialog.ShowFolderOpen(
-								func(reader fyne.ListableURI, err error) {
-									if err != nil {
-										slog.Error("选择软链接路径失败", "error", err)
-										return
-									}
-									if reader == nil {
-										slog.Info("用户取消选择文件夹")
-										return
-									}
-									tmpLinkAddr = reader.Path()
-									slog.Info("选择的软链接路径", "path", tmpLinkAddr)
-									if err != nil {
-									}
-								},
-								win,
-							)
-						},
-					),
-				),
+	server := []fyne.CanvasObject{
+		widget.NewLabelWithStyle("官服/b服切换",
+			fyne.TextAlignLeading,
+			fyne.TextStyle{
+				Bold:   true,
+				Italic: true,
 			},
-			func(isConfirmed bool) {
-				slog.Info("添加软链接确认", "isConfirmed", isConfirmed, "tmpLinkAddr", tmpLinkAddr)
-
-				name, _ := tmpLinkName.Get()
-				if isConfirmed && tmpLinkAddr != "" && name != "" {
-					vm.SetLinkServer(name, tmpLinkAddr)
-					slog.Info("添加软链接", "name", name, "path", tmpLinkAddr)
-					updateRg()
-				}
-			},
-			win,
-		)
-	}
-
-	return container.NewVBox(
-		container.NewHBox(
-			widget.NewButton("添加diff路径", addServer),
-			widget.NewButton("删除选中软链接", func() {
-				if selectedServer != "" {
-					vm.SetLinkServer(selectedServer, "")
-				}
-			}),
-			widget.NewButton("创建软链接", func() {
-				slog.Info("创建软链接结果", "err", vm.CreateLinkToServer(selectedServer))
-			}),
 		),
-		rg,
-	)
+	}
+	change := func(serverName string) {
+		err := vm.CreateLinkToServer(serverName)
+		info := ""
+		if err != nil {
+			info = fmt.Sprintf("切换到 %s 失败, %s", serverName, err.Error())
+		} else {
+			info = "成功切换到" + serverName
+		}
+		dialog.ShowInformation("切服结果", info, win)
+	}
+	for serverName := range vm.LinkServers {
+		item := widget.NewButton(fmt.Sprintf("点击切换到: %s", serverName), func() {
+			change(serverName)
+		})
+		server = append(server, item)
+	}
+
+	return container.NewVBox(server...)
 }
 
 // 获取抽卡链接 UI
 func getGachaLinkUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObject {
-	gachaLink := binding.NewString()
+
+	linkUI := widget.NewLabel("")
+	linkUI.Wrapping = fyne.TextWrapBreak
 
 	return container.NewVBox(
 		container.NewHBox(
-			widget.NewButton("获取抽卡链接", func() {
-				gachaLink.Set(vm.GetGachaLink())
+			widget.NewButton("点击获取抽卡链接", func() {
+				link := vm.GetGachaLink()
+				if link == "" {
+					link = "未获取到链接，请先在游戏里打开抽卡记录"
+				}
+				linkUI.SetText(link)
 			}),
 			widget.NewLabel("成功获取到抽卡链接后会自动复制到剪切板"),
 		),
-
-		widget.NewEntryWithData(gachaLink),
+		linkUI,
 	)
 }

@@ -1,12 +1,12 @@
 package main
 
 import (
-	"embed"
 	"log"
 	"log/slog"
 
 	"os"
 
+	"wwtool/model"
 	"wwtool/view"
 	"wwtool/viewmodel"
 
@@ -14,9 +14,6 @@ import (
 	"fyne.io/fyne/v2/app"
 	"fyne.io/fyne/v2/container"
 )
-
-//go:embed default_config.yaml
-var defaultConfig embed.FS
 
 const (
 	appID = "wwtool"
@@ -29,11 +26,10 @@ func main() {
 	// }()
 
 	// 初始化配置文件（首次创建）
-	if _, err := os.Stat("config.yaml"); os.IsNotExist(err) {
-		data, _ := defaultConfig.ReadFile("default_config.yaml")
-		os.WriteFile("config.yaml", data, 0644)
-	}
-	setFont()
+	model.SetUniqueID(appID)
+
+	// 使用指定的字体
+	// setFont()
 	a := app.NewWithID(appID)
 	w := a.NewWindow("ww tool")
 
@@ -41,7 +37,7 @@ func main() {
 	viewmodel.SetLifecycle(&a)
 	// setMainMenu(w)
 
-	vm, err := viewmodel.NewAppViewModel("config.yaml", &a)
+	vm, err := viewmodel.NewAppViewModel(&a)
 	if err != nil {
 		log.Fatal(err)
 	}
@@ -52,7 +48,7 @@ func main() {
 }
 
 func setFont() {
-	// os.Setenv("FYNE_FONT", "C:/Windows/Fonts/Deng.ttf")
+	os.Setenv("FYNE_FONT", "C:/Windows/Fonts/Deng.ttf")
 }
 
 func setMainMenu(w fyne.Window) {
