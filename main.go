@@ -37,7 +37,8 @@ func main() {
 	a := app.NewWithID(appID)
 	w := a.NewWindow("ww tool")
 
-	// setLifecycle(a)
+	// 设置应用的生命周期事件处理函数
+	viewmodel.SetLifecycle(&a)
 	// setMainMenu(w)
 
 	vm, err := viewmodel.NewAppViewModel("config.yaml", &a)
@@ -52,22 +53,6 @@ func main() {
 
 func setFont() {
 	// os.Setenv("FYNE_FONT", "C:/Windows/Fonts/Deng.ttf")
-}
-
-func setLifecycle(a fyne.App) {
-	cycle := a.Lifecycle()
-	cycle.SetOnEnteredForeground(func() {
-		slog.Info("应用已进入前台")
-	})
-	cycle.SetOnExitedForeground(func() {
-		slog.Info("应用已进入后台")
-	})
-	cycle.SetOnStarted(func() {
-		slog.Info("应用已启动")
-	})
-	cycle.SetOnStopped(func() {
-		slog.Info("应用已停止")
-	})
 }
 
 func setMainMenu(w fyne.Window) {

@@ -27,21 +27,22 @@ func NewAppViewModel(configFile string, app *fyne.App) (*AppViewModel, error) {
 	if err != nil {
 		return nil, err
 	}
-
-	return &AppViewModel{
+	vm := &AppViewModel{
 		App:          app,
 		GamePathList: config.GamePaths,
 		SelectedID:   config.LastSelectedPath,
 		config:       config,
 		ConfigFile:   configFile,
 		LinkServers:  config.LinkServers,
-	}, nil
+	}
+	RegisterEvent(Stopped, func() { vm.SaveConfig() })
+
+	return vm, nil
 }
 
 // 添加游戏路径
 func (vm *AppViewModel) AddGamePath(path string) {
 	vm.GamePathList = append(vm.GamePathList, path)
-	vm.SaveConfig()
 }
 
 // 删除游戏路径
@@ -60,8 +61,6 @@ func (vm *AppViewModel) RemoveGamePath(index int) {
 	if vm.SelectedID >= len(vm.GamePathList) {
 		vm.SelectedID = len(vm.GamePathList) - 1 // 如果删除后选中ID超出范围，调整为最后一个
 	}
-
-	vm.SaveConfig()
 }
 
 func (vm *AppViewModel) SetSelectedID(id int) {
@@ -70,7 +69,6 @@ func (vm *AppViewModel) SetSelectedID(id int) {
 		return
 	}
 	vm.SelectedID = id
-	vm.SaveConfig()
 }
 
 func (vm *AppViewModel) SetLinkServer(name string, path string) {
@@ -81,7 +79,6 @@ func (vm *AppViewModel) SetLinkServer(name string, path string) {
 		delete(vm.LinkServers, name)
 	}
 	vm.LinkServers[name] = path
-	vm.SaveConfig()
 }
 
 // 保存配置文件
@@ -90,6 +87,7 @@ func (vm *AppViewModel) SaveConfig() error {
 	vm.config.GamePaths = vm.GamePathList
 	vm.config.LastSelectedPath = vm.SelectedID
 	vm.config.LinkServers = vm.LinkServers
+	slog.Info("保存配置文件")
 
 	return model.SaveConfig(vm.ConfigFile, vm.config)
 }
@@ -104,6 +102,7 @@ func (vm *AppViewModel) RunSelected() error {
 	return err
 }
 
+// 创建软链接到服务器
 func (vm *AppViewModel) CreateLinkToServer(server string) error {
 	game := vm.GamePathList[vm.SelectedID]
 	if game == "" {

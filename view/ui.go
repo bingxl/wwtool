@@ -48,22 +48,11 @@ func GameSelectorUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObje
 
 	addBtn := widget.NewButton("添加游戏路径", func() {
 		go func() {
-			folder, err := ShowFolderOpen(win)
-			if err != nil {
-				dialog.ShowError(err, win)
-				return
+			folder, _ := ShowFolderOpen(win)
+			if folder != "" && !slices.Contains(vm.GamePathList, folder) {
+				vm.AddGamePath(folder)
+				fyne.DoAndWait(func() { selectWidget.SetOptions(vm.GamePathList) })
 			}
-			if folder == "" {
-				slog.Info("用户取消选择文件夹")
-				return
-			}
-			if slices.Contains(vm.GamePathList, folder) {
-				dialog.ShowInformation("提示", "此路径已添加", win)
-				return
-			}
-
-			vm.AddGamePath(folder)
-			fyne.Do(func() { selectWidget.SetOptions(vm.GamePathList) })
 		}()
 	})
 	delBtn := widget.NewButton("删除选中路径", func() {
@@ -184,6 +173,7 @@ func changeServerUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObje
 	)
 }
 
+// 获取抽卡链接 UI
 func getGachaLinkUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObject {
 	gachaLink := binding.NewString()
 
