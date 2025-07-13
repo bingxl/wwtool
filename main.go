@@ -6,6 +6,7 @@ import (
 
 	"os"
 
+	"wwtool/i18n"
 	"wwtool/model"
 	"wwtool/view"
 	"wwtool/viewmodel"
@@ -25,6 +26,10 @@ func main() {
 	// 	http.ListenAndServe("localhost:6060", nil)
 	// }()
 
+	// 设置多语言
+	// langs := i18n.GetSupportLang()
+	// slog.Info("support langs", "langs", langs)
+	// i18n.SetLang(langs[1])
 	// 初始化配置文件（首次创建）
 	model.SetUniqueID(appID)
 
@@ -43,7 +48,7 @@ func main() {
 	}
 
 	w.SetContent(container.NewVBox(view.BuildUI(w, vm)))
-	w.Resize(fyne.NewSize(500, 400))
+	w.Resize(fyne.NewSize(500, 500))
 	w.ShowAndRun()
 }
 
@@ -53,13 +58,13 @@ func setFont() {
 
 func setMainMenu(w fyne.Window) {
 	mainMenu := fyne.NewMainMenu(
-		fyne.NewMenu("File",
-			fyne.NewMenuItem("Quit", func() {
+		fyne.NewMenu(i18n.T("文件"),
+			fyne.NewMenuItem(i18n.T("退出"), func() {
 				slog.Info("退出应用")
 			}),
 		),
-		fyne.NewMenu("Edit",
-			fyne.NewMenuItem("Preferences", func() {
+		fyne.NewMenu(i18n.T("编辑"),
+			fyne.NewMenuItem(i18n.T("首选项"), func() {
 				slog.Info("打开首选项")
 			}),
 		),

@@ -1,0 +1,353 @@
+{
+    "language": "en",
+    "messages": [
+        {
+            "id": "Cancel",
+            "message": "Cancel",
+            "translation": "Cancel"
+        },
+        {
+            "id": "Advanced",
+            "message": "Advanced",
+            "translation": "Advanced"
+        },
+        {
+            "id": "Confirm",
+            "message": "Confirm",
+            "translation": "Confirm"
+        },
+        {
+            "id": "No",
+            "message": "No",
+            "translation": "No"
+        },
+        {
+            "id": "Yes",
+            "message": "Yes",
+            "translation": "Yes"
+        },
+        {
+            "id": "OK",
+            "message": "OK",
+            "translation": "OK"
+        },
+        {
+            "id": "Enter filename",
+            "message": "Enter filename",
+            "translation": "Enter filename"
+        },
+        {
+            "id": "Open",
+            "message": "Open",
+            "translation": "Open"
+        },
+        {
+            "id": "Save",
+            "message": "Save",
+            "translation": "Save"
+        },
+        {
+            "id": "File",
+            "message": "File",
+            "translation": "File"
+        },
+        {
+            "id": "Folder",
+            "message": "Folder",
+            "translation": "Folder"
+        },
+        {
+            "id": "New Folder",
+            "message": "New Folder",
+            "translation": "New Folder"
+        },
+        {
+            "id": "Create Folder",
+            "message": "Create Folder",
+            "translation": "Create Folder"
+        },
+        {
+            "id": "Show Hidden Files",
+            "message": "Show Hidden Files",
+            "translation": "Show Hidden Files"
+        },
+        {
+            "id": "Error",
+            "message": "Error",
+            "translation": "Error"
+        },
+        {
+            "id": "Quit",
+            "message": "Quit",
+            "translation": "Quit"
+        },
+        {
+            "id": "Undo",
+            "message": "Undo",
+            "translation": "Undo"
+        },
+        {
+            "id": "Redo",
+            "message": "Redo",
+            "translation": "Redo"
+        },
+        {
+            "id": "Cut",
+            "message": "Cut",
+            "translation": "Cut"
+        },
+        {
+            "id": "Copy",
+            "message": "Copy",
+            "translation": "Copy"
+        },
+        {
+            "id": "Paste",
+            "message": "Paste",
+            "translation": "Paste"
+        },
+        {
+            "id": "Select all",
+            "message": "Select all",
+            "translation": "Select all"
+        },
+        {
+            "id": "文件",
+            "message": "文件",
+            "translation": "File"
+        },
+        {
+            "id": "退出",
+            "message": "退出",
+            "translation": "Exit"
+        },
+        {
+            "id": "编辑",
+            "message": "编辑",
+            "translation": "Edit"
+        },
+        {
+            "id": "首选项",
+            "message": "首选项",
+            "translation": "Preferences"
+        },
+        {
+            "id": "查看",
+            "message": "查看",
+            "translation": "view"
+        },
+        {
+            "id": "目录",
+            "message": "目录",
+            "translation": "path"
+        },
+        {
+            "id": "多服",
+            "message": "多服",
+            "translation": "Multi-server"
+        },
+        {
+            "id": "确认",
+            "message": "确认",
+            "translation": "confirm"
+        },
+        {
+            "id": "取消",
+            "message": "取消",
+            "translation": "cancel"
+        },
+        {
+            "id": "删除",
+            "message": "删除",
+            "translation": "remove"
+        },
+        {
+            "id": "提示",
+            "message": "提示",
+            "translation": "info"
+        },
+        {
+            "id": "请先选择一个目录",
+            "message": "请先选择一个目录",
+            "translation": "Please select a path first"
+        },
+        {
+            "id": "启动",
+            "message": "启动",
+            "translation": "run"
+        },
+        {
+            "id": "启动成功",
+            "message": "启动成功",
+            "translation": "run success"
+        },
+        {
+            "id": "程序已启动",
+            "message": "程序已启动",
+            "translation": "Program started"
+        },
+        {
+            "id": "已添加",
+            "message": "已添加",
+            "translation": "has added"
+        },
+        {
+            "id": "选择与操作游戏",
+            "message": "选择与操作游戏",
+            "translation": "Select and operate game"
+        },
+        {
+            "id": "点击右侧按钮选择游戏目录",
+            "message": "点击右侧按钮选择游戏目录",
+            "translation": "Click the right button to select game path"
+        },
+        {
+            "id": "选择游戏目录",
+            "message": "选择游戏目录",
+            "translation": "select game path"
+        },
+        {
+            "id": "别名",
+            "message": "别名",
+            "translation": "alias"
+        },
+        {
+            "id": "添加游戏",
+            "message": "添加游戏",
+            "translation": "add game"
+        },
+        {
+            "id": "添加游戏目录",
+            "message": "添加游戏目录",
+            "translation": "add game path"
+        },
+        {
+            "id": "启动游戏",
+            "message": "启动游戏",
+            "translation": "run game"
+        },
+        {
+            "id": "如果游戏不是安装在默认目录上`C:/Program Files/Wuthering Waves/Wuthering Waves Game`",
+            "message": "如果游戏不是安装在默认目录上`C:/Program Files/Wuthering Waves/Wuthering Waves Game`",
+            "translation": "If the game is not installed in the default path `C:/Program Files/Wuthering Waves/Wuthering Waves Game`"
+        },
+        {
+            "id": "则点击`添加游戏目录`后选择游戏目录添加（注: 游戏本体的目录，不是启动器的目录）",
+            "message": "则点击`添加游戏目录`后选择游戏目录添加（注: 游戏本体的目录，不是启动器的目录）",
+            "translation": "Then click `Add Game Path` and select the game path to add (Note: the path to the game executable, not the launcher)"
+        },
+        {
+            "id": "下拉框中选择正确的游戏目录后点击启动",
+            "message": "下拉框中选择正确的游戏目录后点击启动",
+            "translation": "select target game and then click run"
+        },
+        {
+            "id": "B服官服切换",
+            "message": "B服官服切换",
+            "translation": "change server between bilibili and official"
+        },
+        {
+            "id": "首次运行时点击切换到官服，运行官方启动器，修复游戏；修复完成后点击切换到bilibili服，运行b服启动器，修复游戏",
+            "message": "首次运行时点击切换到官服，运行官方启动器，修复游戏；修复完成后点击切换到bilibili服，运行b服启动器，修复游戏",
+            "translation": "When running for the first time, click to switch to the official server, run the official launcher to repair the game; after the repair is complete, click to switch to the Bilibili server, run the Bilibili launcher to repair the game"
+        },
+        {
+            "id": "之后的切换只需要点击对应的服就可以",
+            "message": "之后的切换只需要点击对应的服就可以",
+            "translation": "Subsequent switching only requires clicking on the corresponding server"
+        },
+        {
+            "id": "抽卡链接获取",
+            "message": "抽卡链接获取",
+            "translation": "get gacha link"
+        },
+        {
+            "id": "启动游戏，游戏里打开抽卡记录后点击`获取抽卡链接`， 获取成功后会自动复制到剪切板里",
+            "message": "启动游戏，游戏里打开抽卡记录后点击`获取抽卡链接`， 获取成功后会自动复制到剪切板里",
+            "translation": "open gacha history in game, and then click 'get gacha link', will set clipboard automated when success"
+        },
+        {
+            "id": "主页",
+            "message": "主页",
+            "translation": "Home"
+        },
+        {
+            "id": "帮助",
+            "message": "帮助",
+            "translation": "help"
+        },
+        {
+            "id": "官服/b服切换",
+            "message": "官服/b服切换",
+            "translation": "official/bilibili server change"
+        },
+        {
+            "id": "切换到 {ServerName} 失败, {Error}",
+            "message": "切换到 {ServerName} 失败, {Error}",
+            "translation": "failed change to {ServerName}, {Error}",
+            "placeholders": [
+                {
+                    "id": "ServerName",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "serverName"
+                },
+                {
+                    "id": "Error",
+                    "string": "%[2]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 2,
+                    "expr": "err.Error()"
+                }
+            ]
+        },
+        {
+            "id": "成功切换到",
+            "message": "成功切换到",
+            "translation": "success changed to"
+        },
+        {
+            "id": "切服结果",
+            "message": "切服结果",
+            "translation": "change result"
+        },
+        {
+            "id": "切换到{TserverName}",
+            "message": "切换到{TserverName}",
+            "translation": "change to {TserverName}",
+            "placeholders": [
+                {
+                    "id": "TserverName",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "T(serverName)"
+                }
+            ]
+        },
+        {
+            "id": "点击获取抽卡链接",
+            "message": "点击获取抽卡链接",
+            "translation": "Click to get gacha link"
+        },
+        {
+            "id": "未获取到链接，请先在游戏里打开抽卡记录",
+            "message": "未获取到链接，请先在游戏里打开抽卡记录",
+            "translation": "Link not obtained, please open gacha history in the game first"
+        },
+        {
+            "id": "链接已复制到剪切板",
+            "message": "链接已复制到剪切板",
+            "translation": "Link copied to clipboard"
+        },
+        {
+            "id": "成功获取到抽卡链接后会自动复制到剪切板",
+            "message": "成功获取到抽卡链接后会自动复制到剪切板",
+            "translation": "After successfully obtaining the gacha link, it will be automatically copied to the clipboard"
+        }
+    ]
+}

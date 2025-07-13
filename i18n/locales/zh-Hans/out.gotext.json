@@ -1,0 +1,481 @@
+{
+    "language": "zh-Hans",
+    "messages": [
+        {
+            "id": "Cancel",
+            "message": "Cancel",
+            "translation": "Cancel",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Advanced",
+            "message": "Advanced",
+            "translation": "Advanced",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Confirm",
+            "message": "Confirm",
+            "translation": "Confirm",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "No",
+            "message": "No",
+            "translation": "No",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Yes",
+            "message": "Yes",
+            "translation": "Yes",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "OK",
+            "message": "OK",
+            "translation": "OK",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Enter filename",
+            "message": "Enter filename",
+            "translation": "Enter filename",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Open",
+            "message": "Open",
+            "translation": "Open",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Save",
+            "message": "Save",
+            "translation": "Save",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "File",
+            "message": "File",
+            "translation": "File",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Folder",
+            "message": "Folder",
+            "translation": "Folder",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "New Folder",
+            "message": "New Folder",
+            "translation": "New Folder",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Create Folder",
+            "message": "Create Folder",
+            "translation": "Create Folder",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Show Hidden Files",
+            "message": "Show Hidden Files",
+            "translation": "Show Hidden Files",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Error",
+            "message": "Error",
+            "translation": "Error",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Quit",
+            "message": "Quit",
+            "translation": "Quit",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Undo",
+            "message": "Undo",
+            "translation": "Undo",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Redo",
+            "message": "Redo",
+            "translation": "Redo",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Cut",
+            "message": "Cut",
+            "translation": "Cut",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Copy",
+            "message": "Copy",
+            "translation": "Copy",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Paste",
+            "message": "Paste",
+            "translation": "Paste",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "Select all",
+            "message": "Select all",
+            "translation": "Select all",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "文件",
+            "message": "文件",
+            "translation": "文件",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "退出",
+            "message": "退出",
+            "translation": "退出",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "编辑",
+            "message": "编辑",
+            "translation": "编辑",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "首选项",
+            "message": "首选项",
+            "translation": "首选项",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "查看",
+            "message": "查看",
+            "translation": "查看",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "目录",
+            "message": "目录",
+            "translation": "目录",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "多服",
+            "message": "多服",
+            "translation": "多服",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "确认",
+            "message": "确认",
+            "translation": "确认",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "取消",
+            "message": "取消",
+            "translation": "取消",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "删除",
+            "message": "删除",
+            "translation": "删除",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "提示",
+            "message": "提示",
+            "translation": "提示",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "请先选择一个目录",
+            "message": "请先选择一个目录",
+            "translation": "请先选择一个目录",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "启动",
+            "message": "启动",
+            "translation": "启动",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "启动成功",
+            "message": "启动成功",
+            "translation": "启动成功",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "程序已启动",
+            "message": "程序已启动",
+            "translation": "程序已启动",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "已添加",
+            "message": "已添加",
+            "translation": "已添加",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "选择与操作游戏",
+            "message": "选择与操作游戏",
+            "translation": "选择与操作游戏",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "点击右侧按钮选择游戏目录",
+            "message": "点击右侧按钮选择游戏目录",
+            "translation": "点击右侧按钮选择游戏目录",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "选择游戏目录",
+            "message": "选择游戏目录",
+            "translation": "选择游戏目录",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "别名",
+            "message": "别名",
+            "translation": "别名",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "添加游戏",
+            "message": "添加游戏",
+            "translation": "添加游戏",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "添加游戏目录",
+            "message": "添加游戏目录",
+            "translation": "添加游戏目录",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "启动游戏",
+            "message": "启动游戏",
+            "translation": "启动游戏",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "如果游戏不是安装在默认目录上`C:/Program Files/Wuthering Waves/Wuthering Waves Game`",
+            "message": "如果游戏不是安装在默认目录上`C:/Program Files/Wuthering Waves/Wuthering Waves Game`",
+            "translation": "如果游戏不是安装在默认目录上`C:/Program Files/Wuthering Waves/Wuthering Waves Game`",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "则点击`添加游戏目录`后选择游戏目录添加（注: 游戏本体的目录，不是启动器的目录）",
+            "message": "则点击`添加游戏目录`后选择游戏目录添加（注: 游戏本体的目录，不是启动器的目录）",
+            "translation": "则点击`添加游戏目录`后选择游戏目录添加（注: 游戏本体的目录，不是启动器的目录）",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "下拉框中选择正确的游戏目录后点击启动",
+            "message": "下拉框中选择正确的游戏目录后点击启动",
+            "translation": "下拉框中选择正确的游戏目录后点击启动",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "B服官服切换",
+            "message": "B服官服切换",
+            "translation": "B服官服切换",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "首次运行时点击切换到官服，运行官方启动器，修复游戏；修复完成后点击切换到bilibili服，运行b服启动器，修复游戏",
+            "message": "首次运行时点击切换到官服，运行官方启动器，修复游戏；修复完成后点击切换到bilibili服，运行b服启动器，修复游戏",
+            "translation": "首次运行时点击切换到官服，运行官方启动器，修复游戏；修复完成后点击切换到bilibili服，运行b服启动器，修复游戏",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "之后的切换只需要点击对应的服就可以",
+            "message": "之后的切换只需要点击对应的服就可以",
+            "translation": "之后的切换只需要点击对应的服就可以",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "抽卡链接获取",
+            "message": "抽卡链接获取",
+            "translation": "抽卡链接获取",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "启动游戏，游戏里打开抽卡记录后点击`获取抽卡链接`， 获取成功后会自动复制到剪切板里",
+            "message": "启动游戏，游戏里打开抽卡记录后点击`获取抽卡链接`， 获取成功后会自动复制到剪切板里",
+            "translation": "启动游戏，游戏里打开抽卡记录后点击`获取抽卡链接`， 获取成功后会自动复制到剪切板里",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "主页",
+            "message": "主页",
+            "translation": "主页",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "帮助",
+            "message": "帮助",
+            "translation": "帮助",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "官服/b服切换",
+            "message": "官服/b服切换",
+            "translation": "官服/b服切换",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "切换到 {ServerName} 失败, {Error}",
+            "message": "切换到 {ServerName} 失败, {Error}",
+            "translation": "切换到 {ServerName} 失败, {Error}",
+            "translatorComment": "Copied from source.",
+            "placeholders": [
+                {
+                    "id": "ServerName",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "serverName"
+                },
+                {
+                    "id": "Error",
+                    "string": "%[2]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 2,
+                    "expr": "err.Error()"
+                }
+            ],
+            "fuzzy": true
+        },
+        {
+            "id": "成功切换到",
+            "message": "成功切换到",
+            "translation": "成功切换到",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "切服结果",
+            "message": "切服结果",
+            "translation": "切服结果",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "切换到{TserverName}",
+            "message": "切换到{TserverName}",
+            "translation": "切换到{TserverName}",
+            "translatorComment": "Copied from source.",
+            "placeholders": [
+                {
+                    "id": "TserverName",
+                    "string": "%[1]s",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "T(serverName)"
+                }
+            ],
+            "fuzzy": true
+        },
+        {
+            "id": "点击获取抽卡链接",
+            "message": "点击获取抽卡链接",
+            "translation": "点击获取抽卡链接",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "未获取到链接，请先在游戏里打开抽卡记录",
+            "message": "未获取到链接，请先在游戏里打开抽卡记录",
+            "translation": "未获取到链接，请先在游戏里打开抽卡记录",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "链接已复制到剪切板",
+            "message": "链接已复制到剪切板",
+            "translation": "链接已复制到剪切板",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        },
+        {
+            "id": "成功获取到抽卡链接后会自动复制到剪切板",
+            "message": "成功获取到抽卡链接后会自动复制到剪切板",
+            "translation": "成功获取到抽卡链接后会自动复制到剪切板",
+            "translatorComment": "Copied from source.",
+            "fuzzy": true
+        }
+    ]
+}

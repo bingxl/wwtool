@@ -14,8 +14,14 @@ import (
 //go:embed default_config.yaml
 var defaultConfig embed.FS
 
+type GamePath struct {
+	Name              string `yaml:"name"`                // 自定义的名称
+	Path              string `yaml:"path"`                // 游戏所在目录
+	HasMultipleServer bool   `yaml:"has-multiple-server"` // 游戏本体是否能用于大陆官服/b服
+}
+
 type Config struct {
-	GamePaths        []string          `yaml:"game-paths"`         // 游戏路径列表, 存放游戏根目录路径，不是启动器路径
+	GamePaths        []GamePath        `yaml:"game-paths"`         // 游戏路径列表, 存放游戏根目录路径，不是启动器路径
 	ExeName          string            `yaml:"exe-name"`           // 游戏可执行文件名
 	LinkServers      map[string]string `yaml:"link-servers"`       // 软链接配置 {server:targetPath}
 	LastSelectedPath int               `yaml:"last-selected-path"` // 上次选中的路径索引
@@ -75,7 +81,11 @@ func LoadConfig() (*Config, error) {
 		return &Config{}, nil
 	}
 	err = yaml.Unmarshal(data, &globalConfig)
-	return globalConfig, err
+	if err != nil {
+		slog.Error("解析配置文件失败, 使用默认配置", "err", err)
+		globalConfig = loadDefault()
+	}
+	return globalConfig, nil
 }
 
 // 保存全局配置
