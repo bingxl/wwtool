@@ -26,6 +26,7 @@ type Config struct {
 	LinkServers      map[string]string `yaml:"link-servers"`       // 软链接配置 {server:targetPath}
 	LastSelectedPath int               `yaml:"last-selected-path"` // 上次选中的路径索引
 	LinkSrcPath      string            `yaml:"link-src-path"`      // 软链接源路径,相对于游戏跟目录
+	ThirdTools       []string          `yaml:"third-tools"`
 }
 
 var (

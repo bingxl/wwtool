@@ -190,3 +190,31 @@ func (vm *AppViewModel) GetGachaLink() string {
 func (vm *AppViewModel) Clipboard(content string) {
 	(*vm.App).Clipboard().SetContent(content)
 }
+
+// ThirdTools 相关操作
+//
+// 包含增加/删除/获取/运行
+func (vm *AppViewModel) GetThirdToolsName() []string {
+	names := make([]string, len(vm.config.ThirdTools))
+	for i, v := range slices.All(vm.config.ThirdTools) {
+		names[i] = filepath.Base(v)
+	}
+	return names
+}
+func (vm *AppViewModel) AddThirdTools(pa string) {
+	if slices.Contains(vm.config.ThirdTools, pa) {
+		return
+	}
+	vm.config.ThirdTools = append(vm.config.ThirdTools, pa)
+}
+func (vm *AppViewModel) RemoveThirdTools(pa string) {
+	vm.config.ThirdTools = slices.DeleteFunc(vm.config.ThirdTools, func(v string) bool {
+		return pa == v
+	})
+}
+func (vm *AppViewModel) RunExe(index int) {
+	if 0 <= index && index < len(vm.config.ThirdTools) {
+		lib.RunExe(vm.config.ThirdTools[index], true)
+	}
+
+}

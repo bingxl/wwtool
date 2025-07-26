@@ -10,3 +10,5 @@ link-servers:
     官服: KrPcSdk_Mainland_official
 
 link-src-path: Client/Binaries/Win64/ThirdParty/KrPcSdk_Mainland
+
+third-tools: []
