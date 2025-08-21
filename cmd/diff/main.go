@@ -3,6 +3,7 @@ package main
 import (
 	"crypto/sha256"
 	"encoding/hex"
+	"flag"
 	"fmt"
 	"io"
 	"log"
@@ -19,11 +20,13 @@ type FileInfo struct {
 }
 
 func main() {
+	var folderA, folderB string
 
 	cacheDir, _ := os.UserCacheDir()
 	appName := "wwtool"
-	folderA := filepath.Join(cacheDir, appName, "KrPcSdk_Mainland_bilibili")
-	folderB := filepath.Join(cacheDir, appName, "KrPcSdk_Mainland_official")
+	flag.StringVar(&folderA, "a", filepath.Join(cacheDir, appName, "KrPcSdk_Mainland_bilibili"), "文件夹A")
+	flag.StringVar(&folderB, "b", filepath.Join(cacheDir, appName, "KrPcSdk_Mainland_official"), "文件夹B")
+	flag.Parse()
 
 	// 收集两个文件夹的文件信息
 	filesA, err := collectFiles(folderA)
