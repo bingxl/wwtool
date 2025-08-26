@@ -1,6 +1,8 @@
 package view
 
 import (
+	"time"
+
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/dialog"
 )
@@ -32,4 +34,13 @@ func ShowFolderOpen(win fyne.Window) (folder string, errReturn error) {
 
 	<-ch // 等待用户选择完成
 	return
+}
+
+// 定时关闭的info
+func ShowInfoWithAutoClose(title, message string, win fyne.Window) {
+	dia := dialog.NewInformation(title, message, win)
+	dia.Show()
+	time.AfterFunc(2*time.Second, func() {
+		fyne.Do(dia.Hide)
+	})
 }

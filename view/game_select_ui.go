@@ -54,7 +54,8 @@ func GameSelectorUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObje
 	delBtn := widget.NewButton(T("删除"), func() {
 		selected := selectWidget.Selected
 		if selected == "" {
-			dialog.ShowInformation(T("提示"), T("请先选择一个目录"), win)
+			// dialog.ShowInformation(T("提示"), T("请先选择一个目录"), win)
+			ShowInfoWithAutoClose(T("提示"), T("请先选择一个目录"), win)
 			return
 		}
 		vm.RemoveGamePath(selectWidget.Selected)
@@ -69,7 +70,8 @@ func GameSelectorUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObje
 		if err != nil {
 			dialog.ShowError(err, win)
 		} else {
-			dialog.ShowInformation(T("启动成功"), T("程序已启动"), win)
+			// dialog.ShowInformation(T("启动成功"), T("程序已启动"), win)
+			ShowInfoWithAutoClose(T("启动成功"), T("程序已启动"), win)
 		}
 	})
 	runBtn.Importance = widget.HighImportance
@@ -80,7 +82,8 @@ func GameSelectorUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObje
 		selectWidget.SetOptions(options)
 		if slices.Contains(options, name) {
 			selectWidget.SetSelected(name)
-			dialog.ShowInformation("info", T("已添加")+name, win)
+			// dialog.ShowInformation("info", T("已添加")+name, win)
+			ShowInfoWithAutoClose("info", T("已添加")+name, win)
 		}
 	}
 

@@ -29,7 +29,7 @@ func ThirdToolSelectorUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.Canva
 	delBtn := widget.NewButton(T("删除"), func() {
 		selected := selectWidget.Selected
 		if selected == "" {
-			dialog.ShowInformation(T("提示"), T("请先选择一个目录"), win)
+			ShowInfoWithAutoClose(T("提示"), T("请先选择一个目录"), win)
 			return
 		}
 		vm.RemoveThirdTools(selectWidget.Selected)
@@ -39,7 +39,7 @@ func ThirdToolSelectorUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.Canva
 
 	runBtn := widget.NewButton(T("启动"), func() {
 		vm.RunExe(selectWidget.SelectedIndex())
-		dialog.ShowInformation(T("已发送启动命令"), T("已发送启动命令"), win)
+		ShowInfoWithAutoClose(T("已发送启动命令"), T("已发送启动命令"), win)
 
 	})
 	runBtn.Importance = widget.HighImportance

@@ -3,7 +3,6 @@ package view
 import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
-	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/layout"
 	"fyne.io/fyne/v2/widget"
 
@@ -61,7 +60,8 @@ func changeServerUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObje
 		} else {
 			info = T("成功切换到") + serverName
 		}
-		dialog.ShowInformation(T("切服结果"), info, win)
+		// dialog.ShowInformation(T("切服结果"), info, win)
+		ShowInfoWithAutoClose(T("切服结果"), info, win)
 	}
 	for serverName := range vm.LinkServers {
 		item := widget.NewButton(T("切换到%s", T(serverName)), func() {
@@ -85,7 +85,8 @@ func getGachaLinkUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObje
 			} else {
 				link = link + "\n" + T("链接已复制到剪切板")
 			}
-			dialog.ShowInformation("info", link, win)
+			// dialog.ShowInformation("info", link, win)
+			ShowInfoWithAutoClose("info", link, win)
 		}),
 		widget.NewLabel(T("成功获取到抽卡链接后会自动复制到剪切板")),
 	)
