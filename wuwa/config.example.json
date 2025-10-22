@@ -1,0 +1,20 @@
+{
+    "tokens": [
+        {
+            "token": "eyJhbGciOiJIUzI1NiJ9.eyJjcmVhdGVkIjoxNzQ2ODg2Njk5MDkwLCJ1c2Vyxxxxxxxxxxxxx.6kgObl6Scomd4Kb8Y1Kg_xxxxxxxxxxxxxxxxxx",
+            "devcode": "BEEAD8CB9722BBD80xxxxxxxxxxxx"
+        }
+    ],
+    "wuwaGamePath": [
+        "C:\\program\\games\\Wuthering Waves\\Wuthering Waves Game",
+        "C:\\program\\games\\wuwa-overseas\\Wuthering Waves\\Wuthering Waves Game"
+    ],
+    "kujiequHeaders": {
+        "ip": "192.168.100.133",
+        "version": "2.2.5",
+        "versioncode": "2250",
+        "distinct_id": "da0b5c51-4627-4ea6-8c54-7ddce5cb6c31",
+        "model": "Redmi K30",
+        "user-agent": "okhttp/3.11.0"
+    }
+}

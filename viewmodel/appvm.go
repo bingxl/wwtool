@@ -6,7 +6,7 @@ import (
 	"os"
 	"path/filepath"
 	"slices"
-	"wwtool/card"
+	"wuwa/card"
 	"wwtool/i18n"
 	"wwtool/lib"
 	"wwtool/model"

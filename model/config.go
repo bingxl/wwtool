@@ -14,10 +14,16 @@ import (
 //go:embed default_config.yaml
 var defaultConfig embed.FS
 
+type KujiequToken struct {
+	Token   string `yaml:"token"`
+	Devcode string `yaml:"devcode"`
+}
+
 type GamePath struct {
-	Name              string `yaml:"name"`                // 自定义的名称
-	Path              string `yaml:"path"`                // 游戏所在目录
-	HasMultipleServer bool   `yaml:"has-multiple-server"` // 游戏本体是否能用于大陆官服/b服
+	Name              string         `yaml:"name"`                // 自定义的名称
+	Path              string         `yaml:"path"`                // 游戏所在目录
+	HasMultipleServer bool           `yaml:"has-multiple-server"` // 游戏本体是否能用于大陆官服/b服
+	Tokens            []KujiequToken `yaml:"tokens"`              // 库街区token
 }
 
 type Config struct {

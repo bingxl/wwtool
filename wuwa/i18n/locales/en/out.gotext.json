@@ -1,0 +1,71 @@
+{
+    "language": "en",
+    "messages": [
+        {
+            "id": "角色活动唤取",
+            "message": "角色活动唤取",
+            "translation": "Featured Resonator Convene",
+            "comment": "key 为传递到请求的参数, value\t为卡池类型放置到存储文件中"
+        },
+        {
+            "id": "武器活动唤取",
+            "message": "武器活动唤取",
+            "translation": "Featured Weapon Convene"
+        },
+        {
+            "id": "角色常驻唤取",
+            "message": "角色常驻唤取",
+            "translation": "Standard Resonator Convene"
+        },
+        {
+            "id": "武器常驻唤取",
+            "message": "武器常驻唤取",
+            "translation": "Standard Weapon Convene"
+        },
+        {
+            "id": "新手唤取",
+            "message": "新手唤取",
+            "translation": "Beginner Convene"
+        },
+        {
+            "id": "新手自选唤取",
+            "message": "新手自选唤取",
+            "translation": "Beginner's Choice Convene"
+        },
+        {
+            "id": "新手自选唤取（感恩定向唤取）",
+            "message": "新手自选唤取（感恩定向唤取）",
+            "translation": "Beginner's Choice Convene（Giveback Custom Convene）"
+        },
+        {
+            "id": "打开文件失败：{Error}",
+            "message": "打开文件失败：{Error}",
+            "translation": "error to open file {Error}",
+            "placeholders": [
+                {
+                    "id": "Error",
+                    "string": "%[1]v",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "err.Error()"
+                }
+            ]
+        },
+        {
+            "id": "读取文件失败：{Error}",
+            "message": "读取文件失败：{Error}",
+            "translation": "filed to read file {Error}",
+            "placeholders": [
+                {
+                    "id": "Error",
+                    "string": "%[1]v",
+                    "type": "string",
+                    "underlyingType": "string",
+                    "argNum": 1,
+                    "expr": "err.Error()"
+                }
+            ]
+        }
+    ]
+}

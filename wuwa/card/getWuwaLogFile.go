@@ -8,6 +8,8 @@ import (
 	"path/filepath"
 	"regexp"
 	"strings"
+
+	"wuwa/i18n"
 )
 
 // startCardRecodeRequest 开始抽卡记录请求
@@ -56,7 +58,7 @@ func GetLinkFromLog(file string) (string, error) {
 	}
 	f, err := os.Open(file)
 	if err != nil {
-		slog.Info("打开文件失败", "err", err)
+		slog.Info(i18n.Printer.Sprintf("打开文件失败：%v", err.Error()))
 		return "", err
 	}
 	defer f.Close()
@@ -76,7 +78,7 @@ func GetLinkFromLog(file string) (string, error) {
 	}
 
 	if err := scanner.Err(); err != nil {
-		slog.Info("读取文件失败：%v", "err", err)
+		slog.Info(i18n.Printer.Sprintf("读取文件失败：%v", err.Error()))
 	}
 	// slog.Info("all links", "links", link)
 	return link, err

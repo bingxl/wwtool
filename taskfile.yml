@@ -1,0 +1,14 @@
+version: '3'
+
+# includes:
+#   wuwa:
+#     taskfile: ./wuwa/taskfile.yml
+#     dir: ./wuwa/
+#     vars:
+#       PUBLISH_SERVER: "bingxl"
+
+tasks:
+  build:
+    cmd: go build -ldflags="-s -w" -o ./wwtool.exe .
+
+

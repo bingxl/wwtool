@@ -1,0 +1,6 @@
+data/*.json
+wuwa.exe
+build
+bin
+config.json
+.env

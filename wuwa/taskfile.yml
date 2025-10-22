@@ -1,0 +1,72 @@
+version: '3'
+
+vars:
+  ENTRY: ./cmd/signin/main.go
+  OUTPUT_FILE: ./build/kurobbsautosignin
+  
+  # publish 任务上传的服务器名， scp 能识别的名称，包括域名/ip/ssh host名
+  # 需要提前设置好ssh
+  DEPLOY_SERVER: "bingxl" 
+
+  # golang 编译时默认的值
+  GOOS: "{{OS}}"
+  GOARCH: "{{ARCH}}"
+  EXE_EXT: "{{exeExt}}" # 默认当前平台的二进制扩展名
+
+dotenv: [.env]
+
+tasks:
+  build:
+    desc: golang build，默认当前平台
+    cmds:
+      - cmd: GOOS={{.GOOS}} GOARCH={{.GOARCH}} go build -ldflags="-s -w" -o {{.OUTPUT_FILE}}{{.EXE_EXT}} {{.ENTRY}}
+
+  build:linux:
+    desc: 打包为linux应用
+    cmds:
+      - task: build
+        vars:
+          GOARCH: amd64
+          GOOS: linux
+          EXE_EXT: ""
+
+  build:windows:
+    desc: 打包为Windows应用
+    cmds:
+      - task: build
+        vars:
+          GOARCH: amd64
+          GOOS: windows
+          EXE_EXT: ".exe"
+  
+  deploy:
+    desc: 打包为Linux应用后使用scp 上传到服务器
+    deps: [build:linux]
+    cmds:
+      - scp {{.OUTPUT_FILE}} {{.DEPLOY_SERVER}}:~/qqbot/
+  
+  show:
+    desc: taskfile 测试用法
+    silent: true
+    
+    vars:
+      os: [windows, linux, darwin]
+      arch: [amd64, arm64]
+      exe:
+        map: {windows:".exe", linux: ""}
+
+    cmds:
+      - echo "{{OS}}-{{ARCH}} {{numCPU}} {{exeExt}} {{uuid}}"
+      - echo {{index .os 0}} {{.exe.windows}}
+      - for: {var: os}
+        cmd: echo {{.ITEM}}
+      - for:
+          matrix:
+            OS: {ref: .os}
+            ARCH: {ref: .arch}
+        cmd:
+          echo "{{.ITEM.OS}}/{{.ITEM.ARCH}}"
+
+  withEnv:
+    desc: 使.env 文件生效后运行go命令 task withEnv -- 运行的命令以及参数
+    cmd: "{{.CLI_ARGS}}"

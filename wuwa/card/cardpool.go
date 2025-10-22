@@ -10,14 +10,11 @@ import (
 	"path/filepath"
 	"strings"
 	"time"
+
+	"wuwa/i18n"
 )
 
-// var T = i18n.Sprintf
-func T(s string) string {
-	// 模拟国际化函数
-	// 实际使用中可以替换为真正的国际化函数
-	return s
-}
+var T = i18n.Sprintf
 
 // -------------记录保存的格式
 // []CardInfo 从新到旧排序
