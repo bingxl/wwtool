@@ -9,6 +9,6 @@ version: '3'
 
 tasks:
   build:
-    cmd: go build -ldflags="-s -w" -o ./wwtool.exe .
+    cmd: go build -ldflags="-s -w -H windowsgui" -o ./wwtool.exe .
 
 
