@@ -12,14 +12,15 @@ import (
 func BuildUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObject {
 
 	return container.NewAppTabs(
-		container.NewTabItem(T("主页"), homeUI(win, vm)),
-		container.NewTabItem("工具", ThirdToolSelectorUI(win, vm)),
-		container.NewTabItem(T("帮助"), helpUI()),
+		container.NewTabItem(T("主页"), HomeUI(win, vm)),
+		container.NewTabItem(T("库街区"), KujiequUI(win, vm)),
+		container.NewTabItem(T("工具"), ThirdToolSelectorUI(win, vm)),
+		container.NewTabItem(T("帮助"), HelpUI()),
 		// container.NewTabItem(T("测试"), TestUI()),
 	)
 }
 
-func homeUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObject {
+func HomeUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObject {
 	return container.NewVBox(
 		GameSelectorUI(win, vm),
 		widget.NewSeparator(),

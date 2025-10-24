@@ -20,10 +20,10 @@ type KujiequToken struct {
 }
 
 type GamePath struct {
-	Name              string         `yaml:"name"`                // 自定义的名称
-	Path              string         `yaml:"path"`                // 游戏所在目录
-	HasMultipleServer bool           `yaml:"has-multiple-server"` // 游戏本体是否能用于大陆官服/b服
-	Tokens            []KujiequToken `yaml:"tokens"`              // 库街区token
+	Name              string `yaml:"name"`                // 自定义的名称
+	Path              string `yaml:"path"`                // 游戏所在目录
+	HasMultipleServer bool   `yaml:"has-multiple-server"` // 游戏本体是否能用于大陆官服/b服
+
 }
 
 type Config struct {
@@ -32,7 +32,8 @@ type Config struct {
 	LinkServers      map[string]string `yaml:"link-servers"`       // 软链接配置 {server:targetPath}
 	LastSelectedPath int               `yaml:"last-selected-path"` // 上次选中的路径索引
 	LinkSrcPath      string            `yaml:"link-src-path"`      // 软链接源路径,相对于游戏跟目录
-	ThirdTools       []string          `yaml:"third-tools"`
+	ThirdTools       []string          `yaml:"third-tools"`        // 小工具
+	Tokens           []KujiequToken    `yaml:"tokens"`             // 库街区token
 }
 
 var (

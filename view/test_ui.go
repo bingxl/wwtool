@@ -11,12 +11,13 @@ func TestUI() fyne.CanvasObject {
 
 	// return InnerWindow()
 	// 这里可以返回一个简单的测试 UI
-	return container.NewVBox(
-
-		// DocTab(),      // 添加文档标签页
+	return container.NewGridWithColumns(
+		1,
+		// DocTab(), // 添加文档标签页
 		// InnerWindow(), // 添加内嵌窗口
 		// Split(),
-		ToolBar(), // 添加工具栏
+		// ToolBar(), // 添加工具栏
+		ListKujiequWidget(),
 	)
 }
 
@@ -65,4 +66,19 @@ func ToolBar() fyne.CanvasObject {
 		label,
 	)
 	return content
+}
+
+func ListKujiequWidget() fyne.CanvasObject {
+	widgets := kujiequWidgetsFakeData
+
+	var widgetsRender []fyne.CanvasObject
+	for _, wid := range widgets {
+		widgetsRender = append(widgetsRender,
+			widget.NewRichTextWithText(kujiequWidgetToMD(wid)),
+		)
+	}
+
+	// widgetsRender.
+
+	return container.NewGridWithColumns(1, widgetsRender...)
 }

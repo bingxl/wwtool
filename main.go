@@ -46,9 +46,10 @@ func main() {
 	if err != nil {
 		log.Fatal(err)
 	}
-
+	w.Resize(fyne.NewSize(690, 500))
+	// w.SetFixedSize(true)
 	w.SetContent(container.NewVBox(view.BuildUI(w, vm)))
-	w.Resize(fyne.NewSize(500, 500))
+
 	w.ShowAndRun()
 }
 

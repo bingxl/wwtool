@@ -12,7 +12,7 @@ type helpDocT struct {
 	content []string
 }
 
-func helpUI() fyne.CanvasObject {
+func HelpUI() fyne.CanvasObject {
 
 	docs := getHelpDocs()
 	scrollsUI := make([]*widget.AccordionItem, len(docs))

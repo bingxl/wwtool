@@ -44,19 +44,31 @@ type KujieQu struct {
 	token   string
 	devcode string
 	headers map[string]string
-	roles   []RoleInfo // 缓存token账号中的所有role
+}
+
+func defaultHeader() map[string]string {
+	return map[string]string{
+		"ip":          "192.168.100.133",
+		"version":     "2.2.5",
+		"versioncode": "2250",
+		"distinct_id": "da0b5c51-4627-4ea6-8c54-7ddce5cb6c31",
+		"model":       "Redmi K30",
+		"user-agent":  "okhttp/3.11.0",
+	}
 }
 
 func (k *KujieQu) SetHeaders(headers map[string]string) {
 	if k.headers == nil {
-		k.headers = headers
-		return
+		k.headers = map[string]string{}
+
 	}
+	maps.Insert(k.headers, maps.All(defaultHeader()))
 	maps.Insert(k.headers, maps.All(headers))
 
 }
-func (k *KujieQu) SetToken(token string) {
+func (k *KujieQu) SetToken(token string, devcode string) {
 	k.token = token
+	k.devcode = devcode
 }
 
 // 查找当前token下 gameId 绑定的角色
@@ -72,7 +84,7 @@ func (k *KujieQu) FindRole(gameId int) ([]RoleInfo, error) {
 	headers := map[string]string{
 		"token":           k.token,
 		"osversion":       "Android",
-		"devcode":         k.headers["devcode"],
+		"devcode":         k.devcode,
 		"countrycode":     "CN",
 		"ip":              k.headers["ip"],
 		"model":           k.headers["model"],
@@ -113,7 +125,6 @@ func (k *KujieQu) FindRole(gameId int) ([]RoleInfo, error) {
 				roles = append(roles, v)
 			}
 		}
-		k.roles = roles
 		return roles, nil
 	}
 
@@ -125,8 +136,8 @@ func (k *KujieQu) FindRole(gameId int) ([]RoleInfo, error) {
 func (k *KujieQu) FindAllRoles(args ...bool) ([]RoleInfo, error) {
 	forceFresh := len(args) > 0 && args[0]
 
-	if len(k.roles) > 0 && !forceFresh {
-		return k.roles, nil
+	if roles, ok := GetGlobalRoles(k.token); ok && !forceFresh {
+		return roles, nil
 	}
 
 	var roles []RoleInfo
@@ -138,6 +149,7 @@ func (k *KujieQu) FindAllRoles(args ...bool) ([]RoleInfo, error) {
 		}
 		roles = append(roles, roleInfos...)
 	}
+	AddGlobalRoles(k.token, roles)
 	return roles, nil
 }
 
@@ -221,7 +233,7 @@ func (k *KujieQu) BbsSign() string {
 	headers := map[string]string{
 		"token":        k.token,
 		"osversion":    "Android",
-		"devcode":      k.headers["devcode"],
+		"devcode":      k.devcode,
 		"distinct_id":  k.headers["distinct_id"],
 		"countrycode":  "CN",
 		"ip":           k.headers["ip"],
@@ -253,8 +265,14 @@ func (k *KujieQu) BbsSign() string {
 }
 
 func NewKujieQu(token Token, headers map[string]string) KujieQu {
+	if headers == nil {
+		headers = map[string]string{}
+	}
 	headers["devcode"] = token.Devcode
-	return KujieQu{token: token.Token, devcode: token.Devcode, headers: headers}
+
+	k := KujieQu{token: token.Token, devcode: token.Devcode}
+	k.SetHeaders(headers)
+	return k
 }
 
 // 开始获取所有角色信息并签到

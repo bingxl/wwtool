@@ -6,12 +6,15 @@ import (
 	"os"
 	"path/filepath"
 	"slices"
+
 	"wuwa/card"
+	"wuwa/kujiequ"
 	"wwtool/i18n"
 	"wwtool/lib"
 	"wwtool/model"
 
 	"fyne.io/fyne/v2"
+	"fyne.io/fyne/v2/data/binding"
 )
 
 var T = i18n.T
@@ -20,7 +23,10 @@ type AppViewModel struct {
 	App          *fyne.App
 	GamePathList []model.GamePath
 
-	SelectedID  int               // 当前选中的gamePath index， -1 表示都没选中
+	SelectedID           int            // 当前选中的gamePath index， -1 表示都没选中
+	SelectedKujiequToken binding.String // 当前选中的库街区 token
+	RefreshKujiequWidget binding.String // 刷新库街区widgets
+
 	LinkServers map[string]string // 软链接配置 {server:targetPath}
 
 	// 配置项
@@ -35,10 +41,12 @@ func NewAppViewModel(app *fyne.App) (*AppViewModel, error) {
 	}
 	slog.Info("config content", "config", config)
 	vm := &AppViewModel{
-		App:          app,
-		GamePathList: config.GamePaths,
-		SelectedID:   config.LastSelectedPath,
-		config:       config,
+		App:                  app,
+		GamePathList:         config.GamePaths,
+		SelectedID:           config.LastSelectedPath,
+		SelectedKujiequToken: binding.NewString(),
+		RefreshKujiequWidget: binding.NewString(),
+		config:               config,
 
 		LinkServers: config.LinkServers,
 	}
@@ -217,4 +225,54 @@ func (vm *AppViewModel) RunExe(index int) {
 		lib.RunExe(vm.config.ThirdTools[index], true)
 	}
 
+}
+
+// 添加库街区token
+func (vm *AppViewModel) AddToken(token, devcode string) {
+	vm.config.Tokens = append(vm.config.Tokens, model.KujiequToken{Token: token, Devcode: devcode})
+}
+
+func (vm *AppViewModel) GetTokens() (tokens []string) {
+	if vm.config.Tokens == nil {
+		return
+	}
+	for _, t := range vm.config.Tokens {
+		tokens = append(tokens, t.Token)
+	}
+	return
+}
+
+// 移除库街区token
+func (vm *AppViewModel) DeleteToken(token string) {
+	vm.config.Tokens = slices.DeleteFunc(vm.config.Tokens, func(t model.KujiequToken) bool {
+		return t.Token == token
+	})
+}
+
+// 获取库街区小组件
+func (vm *AppViewModel) GetKujiequWidgets(token string, roleIds ...string) (widgets []kujiequ.WidgetResponseData) {
+	var tokenObj model.KujiequToken
+	for _, t := range vm.config.Tokens {
+		if t.Token == token {
+			tokenObj = t
+			break
+		}
+	}
+	if tokenObj.Token == "" {
+		slog.Error("配置文件中未找到token: " + token)
+		return
+	}
+	k := kujiequ.NewKujieQu(kujiequ.Token(tokenObj), nil)
+	slog.Info("开始获取小组件")
+
+	if len(roleIds) == 0 {
+		widgets, _ = k.GetAllWidgets()
+		return
+	}
+	for _, roleId := range roleIds {
+		slog.Info("roleId" + roleId)
+		// @TODO
+	}
+
+	return
 }

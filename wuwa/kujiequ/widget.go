@@ -87,12 +87,17 @@ func (k *KujieQu) GetWidget(role RoleInfo) (widgetData WidgetResponseData, err e
 func (k *KujieQu) GetAllWidgets() (widgets []WidgetResponseData, err error) {
 	roles, err := k.FindAllRoles()
 	if err != nil {
+		slog.Error("获取角色失败" + err.Error())
 		return
 	}
 	for _, role := range roles {
-		if widget, err := k.GetWidget(role); err == nil {
-			widgets = append(widgets, widget)
+		widget, err := k.GetWidget(role)
+		if err != nil {
+			slog.Error("获取角色的小组件失败", "roleName", role.RoleName, "err", err)
+			continue
 		}
+		slog.Info("成功获取的小组件", "roleName", role.RoleName, "widget", widget)
+		widgets = append(widgets, widget)
 	}
 
 	return
