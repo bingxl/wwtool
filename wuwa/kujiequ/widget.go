@@ -9,6 +9,7 @@ import (
 	"log/slog"
 	"net/http"
 	"net/url"
+	"slices"
 )
 
 // 库街区鸣潮 小卡片
@@ -90,15 +91,31 @@ func (k *KujieQu) GetAllWidgets() (widgets []WidgetResponseData, err error) {
 		slog.Error("获取角色失败" + err.Error())
 		return
 	}
+	resultsChan := make(chan WidgetResponseData, len(roles))
 	for _, role := range roles {
-		widget, err := k.GetWidget(role)
-		if err != nil {
-			slog.Error("获取角色的小组件失败", "roleName", role.RoleName, "err", err)
-			continue
-		}
-		slog.Info("成功获取的小组件", "roleName", role.RoleName, "widget", widget)
-		widgets = append(widgets, widget)
+		go func() {
+			widget, err := k.GetWidget(role)
+
+			if err != nil {
+				slog.Error("获取角色的小组件失败", "roleName", role.RoleName, "err", err)
+
+			} else {
+				slog.Info("成功获取的小组件", "roleName", role.RoleName, "widget", widget)
+			}
+			resultsChan <- widget
+		}()
 	}
+
+	for i := 0; i < len(roles); i++ {
+		widget := <-resultsChan
+		if widget.RoleId != "" {
+			widgets = append(widgets, widget)
+		}
+	}
+	// 按游戏类型排序
+	slices.SortFunc(widgets, func(a, b WidgetResponseData) int {
+		return a.GameId - b.GameId
+	})
 
 	return
 }

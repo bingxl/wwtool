@@ -40,6 +40,7 @@ func NewAppViewModel(app *fyne.App) (*AppViewModel, error) {
 		return nil, err
 	}
 	slog.Info("config content", "config", config)
+
 	vm := &AppViewModel{
 		App:                  app,
 		GamePathList:         config.GamePaths,
@@ -50,6 +51,10 @@ func NewAppViewModel(app *fyne.App) (*AppViewModel, error) {
 
 		LinkServers: config.LinkServers,
 	}
+	if len(config.Tokens) != 0 {
+		vm.SelectedKujiequToken.Set(config.Tokens[0].Token)
+	}
+
 	RegisterEvent(Stopped, func() { vm.SaveConfig() })
 
 	return vm, nil

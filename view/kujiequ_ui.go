@@ -78,9 +78,14 @@ func KujiequUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObject {
 	)
 }
 
-// 一个
+// 渲染库街区小组件
 func widgetGridObj(vm *viewmodel.AppViewModel) fyne.CanvasObject {
 	kujiequWidgetsUI := container.NewGridWithColumns(2)
+	kujiequLayout := widget.NewAccordion(
+		widget.NewAccordionItem("小组件", kujiequWidgetsUI),
+	)
+	kujiequLayout.OpenAll()
+
 	nameAlias := func(name string) string {
 		alias := map[string]string{
 			"逆境深塔·深境区":  "深塔",
@@ -139,9 +144,15 @@ func widgetGridObj(vm *viewmodel.AppViewModel) fyne.CanvasObject {
 		)
 	}
 
-	// token发生变动时执行
+	// 需要刷新组件
 	changed := func() {
 		tokenStr, err := vm.SelectedKujiequToken.Get()
+		changedTime, _ := vm.RefreshKujiequWidget.Get()
+
+		// 打开软件时不执行操作
+		if changedTime == "" {
+			return
+		}
 		if err != nil {
 			slog.Info(tokenStr)
 			return
@@ -160,9 +171,7 @@ func widgetGridObj(vm *viewmodel.AppViewModel) fyne.CanvasObject {
 	// 添加监听事件
 	vm.RefreshKujiequWidget.AddListener(binding.NewDataListener(changed))
 
-	return widget.NewAccordion(
-		widget.NewAccordionItem("小组件", kujiequWidgetsUI),
-	)
+	return kujiequLayout
 
 }
 
