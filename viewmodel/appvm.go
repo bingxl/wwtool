@@ -2,6 +2,7 @@ package viewmodel
 
 import (
 	"errors"
+	"fmt"
 	"log/slog"
 	"os"
 	"path/filepath"
@@ -254,20 +255,35 @@ func (vm *AppViewModel) DeleteToken(token string) {
 	})
 }
 
-// 获取库街区小组件
-func (vm *AppViewModel) GetKujiequWidgets(token string, roleIds ...string) (widgets []kujiequ.WidgetResponseData) {
-	var tokenObj model.KujiequToken
+// 从当前选中的库街区token 中实例化 kujiequ.KujieQu
+func (vm *AppViewModel) getKujiequToken() (token kujiequ.Token, err error) {
+	tk, err := vm.SelectedKujiequToken.Get()
+	if tk == "" {
+		err = fmt.Errorf("未选中token")
+	}
+	if err != nil {
+		return
+	}
+
 	for _, t := range vm.config.Tokens {
-		if t.Token == token {
-			tokenObj = t
+		if t.Token == tk {
+			token = kujiequ.Token(t)
 			break
 		}
 	}
-	if tokenObj.Token == "" {
-		slog.Error("配置文件中未找到token: " + token)
+
+	return
+}
+
+// 获取库街区小组件
+func (vm *AppViewModel) GetKujiequWidgets(token string, roleIds ...string) (widgets []kujiequ.WidgetResponseData) {
+
+	tk, err := vm.getKujiequToken()
+	if err != nil {
+		slog.Error("实例化库街区失败" + err.Error())
 		return
 	}
-	k := kujiequ.NewKujieQu(kujiequ.Token(tokenObj), nil)
+	k := kujiequ.NewKujieQu(tk, nil)
 	slog.Info("开始获取小组件")
 
 	if len(roleIds) == 0 {
@@ -280,4 +296,14 @@ func (vm *AppViewModel) GetKujiequWidgets(token string, roleIds ...string) (widg
 	}
 
 	return
+}
+
+// 库街区与角色签到
+func (vm *AppViewModel) KujiequSignin() string {
+	tk, err := vm.getKujiequToken()
+	if err != nil {
+		slog.Error("error to get kujiequ Token " + err.Error())
+	}
+	signinResult := kujiequ.StartSign([]kujiequ.Token{tk}, nil)
+	return signinResult
 }

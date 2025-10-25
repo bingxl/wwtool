@@ -10,15 +10,13 @@ import (
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/data/binding"
+	"fyne.io/fyne/v2/dialog"
 	"fyne.io/fyne/v2/widget"
 )
 
 func KujiequUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObject {
-	// for _, token := range tokens {
-	// 	widgets := vm.GetKujiequWidgets(token)
-	// }
 
-	// 创建一个选择框，显示游戏路径列表
+	// token 选择下拉框
 	selectWidget := widget.NewSelect(
 		vm.GetTokens(),
 		func(selected string) {
@@ -31,10 +29,23 @@ func KujiequUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObject {
 		selectWidget.Refresh()
 	}
 
+	// 库街区签到按钮
+	signinBtn := widget.NewButton(T("签到"), func() {
+		result := vm.KujiequSignin()
+		if result == "" {
+			result = "未获取到签到结果"
+		}
+		ShowInfoWithAutoClose(T("签到结果"), result, win)
+	})
+
+	// 删除token 按钮
 	delBtn := widget.NewButton(T("删除"), func() {
 		selected := selectWidget.Selected
 		if selected == "" {
-			ShowInfoWithAutoClose(T("提示"), T("请先选择一个token"), win)
+			dialog.NewInformation(
+				T("提示"),
+				T("请先选择一个token"),
+				win).Show()
 			return
 		}
 		vm.DeleteToken(selectWidget.Selected)
@@ -64,27 +75,33 @@ func KujiequUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObject {
 		updateSelect()
 	}
 
-	return container.NewVBox(
+	kujiequ := container.NewVBox(
+		// 1,
 		addTokenUI(win, vm, onAddToken),
 		widget.NewSeparator(),
 		title("选择token"),
 		container.NewGridWithColumns(
-			3,
+			4,
 			selectWidget,
 			delBtn,
+			signinBtn,
 			runBtn,
 		),
-		container.NewStack((widgetGridObj(vm))),
+	)
+
+	return container.NewBorder(
+		kujiequ,
+		nil, nil, nil,
+		widgetGridObj(vm),
 	)
 }
 
 // 渲染库街区小组件
 func widgetGridObj(vm *viewmodel.AppViewModel) fyne.CanvasObject {
 	kujiequWidgetsUI := container.NewGridWithColumns(2)
-	kujiequLayout := widget.NewAccordion(
-		widget.NewAccordionItem("小组件", kujiequWidgetsUI),
-	)
-	kujiequLayout.OpenAll()
+
+	kujiequLayout := container.NewVScroll(kujiequWidgetsUI)
+	// kujiequLayout := kujiequWidgetsUI
 
 	nameAlias := func(name string) string {
 		alias := map[string]string{
@@ -157,14 +174,16 @@ func widgetGridObj(vm *viewmodel.AppViewModel) fyne.CanvasObject {
 			slog.Info(tokenStr)
 			return
 		}
+
 		kujiequWidgets := vm.GetKujiequWidgets(tokenStr)
 		// kujiequWidgets := kujiequWidgetsFakeData
 		// kujiequWidgets = append(kujiequWidgets, kujiequWidgetsFakeData...)
 		kujiequWidgetsUI.RemoveAll()
 		for _, wid := range kujiequWidgets {
-			kujiequWidgetsUI.Add(card(wid))
+			ren := card(wid)
+			slog.Info("card 小组件minSize", "minSize", ren.MinSize())
+			kujiequWidgetsUI.Add(ren)
 		}
-		kujiequWidgetsUI.Refresh()
 
 	}
 

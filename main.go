@@ -13,7 +13,6 @@ import (
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/app"
-	"fyne.io/fyne/v2/container"
 )
 
 const (
@@ -48,7 +47,7 @@ func main() {
 	}
 	w.Resize(fyne.NewSize(690, 500))
 	// w.SetFixedSize(true)
-	w.SetContent(container.NewVBox(view.BuildUI(w, vm)))
+	w.SetContent(view.BuildUI(w, vm))
 
 	w.ShowAndRun()
 }
