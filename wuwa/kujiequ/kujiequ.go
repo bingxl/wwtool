@@ -22,8 +22,8 @@ var Apis = map[string]string{
 	"sign":         KujiequHost + "/encourage/signIn/v2",        // 游戏签到地址
 	"findRoles":    KujiequHost + "/user/role/findRoleList",     // 获取角色列表地址
 	"bbsSign":      KujiequHost + "/user/signIn",                // bbs签到
-	"wuwaWidget":   KujiequHost + "/gamer/widget/game3/getData", // 鸣潮小组件
-	"punishWidget": KujiequHost + "/gamer/widget/game2/getData", // 站双小组件
+	"wuwaWidget":   KujiequHost + "/gamer/widget/game3/refresh", // 鸣潮小组件
+	"punishWidget": KujiequHost + "/gamer/widget/game2/refresh", // 站双小组件
 }
 
 // -------end api config
