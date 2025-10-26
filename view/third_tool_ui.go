@@ -12,28 +12,32 @@ import (
 )
 
 // 游戏路径选择器 UI
-func ThirdToolSelectorUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObject {
+func ThirdToolSelectorUI(win fyne.Window) fyne.CanvasObject {
+	vm := viewmodel.NewThirdToolsViewModel()
+
 	// 创建一个选择框，显示游戏路径列表
 	selectWidget := widget.NewSelect(
 		vm.GetThirdToolsName(),
 		func(selected string) {
-			vm.SetSelectedID(selected)
-			slog.Info("选中路径", "path", selected, "id", vm.SelectedID)
+			slog.Info("选中路径", "path", selected)
 		},
 	)
+
 	updateSelect := func() {
 		selectWidget.SetOptions(vm.GetThirdToolsName())
 		selectWidget.Refresh()
 	}
 
+	vm.BindThirdNames.AddListener(
+		binding.NewDataListener(updateSelect))
+
 	delBtn := widget.NewButton(T("删除"), func() {
-		selected := selectWidget.Selected
-		if selected == "" {
+		selectedIndex := selectWidget.SelectedIndex()
+		if selectedIndex < 0 {
 			ShowInfoWithAutoClose(T("提示"), T("请先选择一个目录"), win)
 			return
 		}
-		vm.RemoveThirdTools(selectWidget.Selected)
-		updateSelect()
+		vm.RemoveThirdTools(selectedIndex)
 	})
 	delBtn.Importance = widget.DangerImportance
 
@@ -44,14 +48,8 @@ func ThirdToolSelectorUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.Canva
 	})
 	runBtn.Importance = widget.HighImportance
 
-	onAddGame := func(name string) {
-		// 刷新select 组件，设置选中的game
-		vm.AddThirdTools(name)
-		updateSelect()
-	}
-
 	return container.NewVBox(
-		addThirdToolUI(win, vm, onAddGame),
+		addThirdToolUI(win, &vm),
 		widget.NewSeparator(),
 		title("选择与操作游戏"),
 		container.NewGridWithColumns(
@@ -66,11 +64,9 @@ func ThirdToolSelectorUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.Canva
 // 添加游戏路径
 //
 // onAdd - func(name string) 添加游戏成功时的回调, name 添加的别名
-func addThirdToolUI(win fyne.Window, vm *viewmodel.AppViewModel, onAdd func(name string)) fyne.CanvasObject {
+func addThirdToolUI(win fyne.Window, vm *viewmodel.ThirdToolsViewModel) fyne.CanvasObject {
 
-	bindPath := binding.NewString()
-
-	pathEntry := widget.NewEntryWithData(bindPath)
+	pathEntry := widget.NewEntry()
 	pathEntry.SetPlaceHolder(T("点击右侧按钮选择可执行文件"))
 
 	pathButton := widget.NewButton(T("选择可执行文件"), func() {
@@ -83,15 +79,14 @@ func addThirdToolUI(win fyne.Window, vm *viewmodel.AppViewModel, onAdd func(name
 					"name", exe.Name(),
 					// "URI", exe,
 				)
-				bindPath.Set(exe.Path())
+				pathEntry.SetText(exe.Path())
+
 			}
 		}, win)
 		// 执行选择游戏路径功能
-
 	})
 
 	form := widget.NewForm(
-
 		widget.NewFormItem(T("路径"), container.NewAdaptiveGrid(2, pathEntry, pathButton)),
 	)
 	form.SubmitText = T("添加")
@@ -100,11 +95,9 @@ func addThirdToolUI(win fyne.Window, vm *viewmodel.AppViewModel, onAdd func(name
 			slog.Info("form validate error", "err", err)
 			return
 		}
-		path, _ := bindPath.Get()
-
-		onAdd(path)
+		vm.AddThirdTools(pathEntry.Text)
 		// 添加后重置表单状态
-		bindPath.Set("")
+		pathEntry.SetText("")
 	}
 
 	return widget.NewAccordion(

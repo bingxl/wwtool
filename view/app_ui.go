@@ -13,8 +13,8 @@ func BuildUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObject {
 
 	return container.NewAppTabs(
 		container.NewTabItem(T("主页"), HomeUI(win, vm)),
-		container.NewTabItem(T("库街区"), KujiequUI(win, vm)),
-		container.NewTabItem(T("工具"), ThirdToolSelectorUI(win, vm)),
+		container.NewTabItem(T("库街区"), KujiequUI(win)),
+		container.NewTabItem(T("工具"), ThirdToolSelectorUI(win)),
 		container.NewTabItem(T("帮助"), HelpUI()),
 		// container.NewTabItem(T("测试"), TestUI()),
 	)

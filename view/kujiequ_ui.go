@@ -14,13 +14,13 @@ import (
 	"fyne.io/fyne/v2/widget"
 )
 
-func KujiequUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObject {
-
+func KujiequUI(win fyne.Window) fyne.CanvasObject {
+	vm := viewmodel.NewKujiequViewModel()
 	// token 选择下拉框
 	selectWidget := widget.NewSelect(
 		vm.GetTokens(),
 		func(selected string) {
-			vm.SelectedKujiequToken.Set(selected)
+			vm.BindSelectedKujiequToken.Set(selected)
 			slog.Info("选中的token", "token", selected)
 		},
 	)
@@ -60,7 +60,7 @@ func KujiequUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObject {
 			slog.Info("点击了获取小组件，并且token 不为空")
 			now := time.Now().Unix()
 			// 使用当前时间作为参数来刷新 widgets
-			vm.RefreshKujiequWidget.Set(fmt.Sprintf("%d", now))
+			vm.BindRefreshKujiequWidget.Set(fmt.Sprintf("%d", now))
 
 			// wids := vm.GetKujiequWidgets(selectWidget.Selected)
 			// vm.SelectedKujiequToken.
@@ -77,7 +77,7 @@ func KujiequUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObject {
 
 	kujiequ := container.NewVBox(
 		// 1,
-		addTokenUI(win, vm, onAddToken),
+		addTokenUI(win, &vm, onAddToken),
 		widget.NewSeparator(),
 		title("选择token"),
 		container.NewGridWithColumns(
@@ -92,12 +92,12 @@ func KujiequUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObject {
 	return container.NewBorder(
 		kujiequ,
 		nil, nil, nil,
-		widgetGridObj(vm),
+		widgetGridObj(&vm),
 	)
 }
 
 // 渲染库街区小组件
-func widgetGridObj(vm *viewmodel.AppViewModel) fyne.CanvasObject {
+func widgetGridObj(vm *viewmodel.KujiequViewModel) fyne.CanvasObject {
 	kujiequWidgetsUI := container.NewGridWithColumns(2)
 
 	kujiequLayout := container.NewVScroll(kujiequWidgetsUI)
@@ -163,8 +163,8 @@ func widgetGridObj(vm *viewmodel.AppViewModel) fyne.CanvasObject {
 
 	// 需要刷新组件
 	changed := func() {
-		tokenStr, err := vm.SelectedKujiequToken.Get()
-		changedTime, _ := vm.RefreshKujiequWidget.Get()
+		tokenStr, err := vm.BindSelectedKujiequToken.Get()
+		changedTime, _ := vm.BindRefreshKujiequWidget.Get()
 
 		// 打开软件时不执行操作
 		if changedTime == "" {
@@ -188,14 +188,14 @@ func widgetGridObj(vm *viewmodel.AppViewModel) fyne.CanvasObject {
 	}
 
 	// 添加监听事件
-	vm.RefreshKujiequWidget.AddListener(binding.NewDataListener(changed))
+	vm.BindRefreshKujiequWidget.AddListener(binding.NewDataListener(changed))
 
 	return kujiequLayout
 
 }
 
 // 添加token
-func addTokenUI(win fyne.Window, vm *viewmodel.AppViewModel, onAdd func(token, devcode string)) fyne.CanvasObject {
+func addTokenUI(win fyne.Window, vm *viewmodel.KujiequViewModel, onAdd func(token, devcode string)) fyne.CanvasObject {
 
 	bindToken := binding.NewString()
 	bindDevcode := binding.NewString()

@@ -41,7 +41,7 @@ func main() {
 	viewmodel.SetLifecycle(&a)
 	// setMainMenu(w)
 
-	vm, err := viewmodel.NewAppViewModel(&a)
+	vm, err := viewmodel.NewAppViewModel()
 	if err != nil {
 		log.Fatal(err)
 	}

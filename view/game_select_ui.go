@@ -3,7 +3,6 @@ package view
 import (
 	"errors"
 	"log/slog"
-	"slices"
 	"strings"
 	"wwtool/viewmodel"
 
@@ -18,18 +17,21 @@ import (
 func GameSelectorUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObject {
 	// 创建一个选择框，显示游戏路径列表
 	selectWidget := widget.NewSelect(
-		vm.GetGameNames(),
+		[]string{},
 		func(selected string) {
 			vm.SetSelectedID(selected)
-			slog.Info("选中路径", "path", selected, "id", vm.SelectedID)
+			slog.Info("选中路径", "path", selected, "id", vm.BindGameSelectedIndex)
 		},
 	)
-	if vm.SelectedID >= 0 && vm.SelectedID < len(vm.GamePathList) {
-		selectWidget.SetSelectedIndex(vm.SelectedID)
-	}
+	vm.BindGameNames.AddListener(binding.NewDataListener(func() {
+		games, err := vm.BindGameNames.Get()
+		if err == nil {
+			selectWidget.SetOptions(games)
+		}
+	}))
 
 	viewBtn := widget.NewButton(T("查看"), func() {
-		game := vm.GamePathList[vm.SelectedID]
+		game, _ := vm.GetCurrentSelectedGame()
 		multiple := "✅"
 		if !game.HasMultipleServer {
 			multiple = "❌"
@@ -76,19 +78,8 @@ func GameSelectorUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObje
 	})
 	runBtn.Importance = widget.HighImportance
 
-	onAddGame := func(name string) {
-		// 刷新select 组件，设置选中的game
-		options := vm.GetGameNames()
-		selectWidget.SetOptions(options)
-		if slices.Contains(options, name) {
-			selectWidget.SetSelected(name)
-			// dialog.ShowInformation("info", T("已添加")+name, win)
-			ShowInfoWithAutoClose("info", T("已添加")+name, win)
-		}
-	}
-
 	return container.NewVBox(
-		addGameUI(win, vm, onAddGame),
+		addGameUI(win, vm),
 		widget.NewSeparator(),
 		title("选择与操作游戏"),
 		container.NewGridWithColumns(
@@ -104,10 +95,7 @@ func GameSelectorUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObje
 // 添加游戏路径
 //
 // onAdd - func(name string) 添加游戏成功时的回调, name 添加的别名
-func addGameUI(win fyne.Window, vm *viewmodel.AppViewModel, onAdd func(name string)) fyne.CanvasObject {
-	bindName := binding.NewString()
-	bindPath := binding.NewString()
-	bindHasMultiple := binding.NewBool()
+func addGameUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObject {
 
 	hasString := func(errInfo string) func(string) error {
 		errInfo = T(errInfo)
@@ -119,9 +107,9 @@ func addGameUI(win fyne.Window, vm *viewmodel.AppViewModel, onAdd func(name stri
 		}
 
 	}
-	nameEntry := widget.NewEntryWithData(bindName)
+	nameEntry := widget.NewEntry()
 	nameEntry.Validator = hasString("请输入别名")
-	pathEntry := widget.NewEntryWithData(bindPath)
+	pathEntry := widget.NewEntry()
 	pathEntry.SetPlaceHolder(T("点击右侧按钮选择游戏目录"))
 	pathEntry.Validator = hasString("请选择游戏目录")
 
@@ -131,12 +119,13 @@ func addGameUI(win fyne.Window, vm *viewmodel.AppViewModel, onAdd func(name stri
 			folder, err := ShowFolderOpen(win)
 			if err == nil && folder != "" {
 				// binding 线程安全， 不需要fyne.Do
-				bindPath.Set(folder)
-
+				pathEntry.SetText(folder)
 			}
 		}()
 	})
-	hasMultiple := widget.NewCheckWithData("", bindHasMultiple)
+	hasMultiple := widget.NewCheck("", func(checked bool) {
+
+	})
 
 	form := widget.NewForm(
 		widget.NewFormItem(T("别名"), nameEntry),
@@ -149,16 +138,14 @@ func addGameUI(win fyne.Window, vm *viewmodel.AppViewModel, onAdd func(name stri
 			slog.Info("form validate error", "err", err)
 			return
 		}
-		name, _ := bindName.Get()
-		path, _ := bindPath.Get()
-		hasMultiple, _ := bindHasMultiple.Get()
 
-		vm.AddGamePath(name, path, hasMultiple)
-		onAdd(name)
+		vm.AddGamePath(nameEntry.Text, pathEntry.Text, hasMultiple.Checked)
+		// onAdd(name)
 		// 添加后重置表单状态
-		bindName.Set("")
-		bindPath.Set("")
-		bindHasMultiple.Set(false)
+		nameEntry.SetText("")
+		pathEntry.SetText("")
+		hasMultiple.SetChecked(false)
+
 	}
 
 	return widget.NewAccordion(
