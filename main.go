@@ -17,6 +17,7 @@ import (
 
 const (
 	appID = "wwtool"
+	debug = false
 )
 
 func main() {
@@ -30,6 +31,10 @@ func main() {
 	// slog.Info("support langs", "langs", langs)
 	// i18n.SetLang(langs[1])
 	// 初始化配置文件（首次创建）
+	if debug {
+		slog.SetLogLoggerLevel(slog.LevelDebug)
+	}
+
 	model.SetUniqueID(appID)
 
 	// 使用指定的字体
