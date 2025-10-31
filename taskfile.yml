@@ -8,7 +8,25 @@ version: '3'
 #       PUBLISH_SERVER: "bingxl"
 
 tasks:
-  build:
-    cmd: go build -ldflags="-s -w -H windowsgui" -o ./wwtool.exe .
 
+  build:
+    desc: "构建应用程序 fyne 使用了cgo，此处禁用交差编译"
+    cmds:
+      - task: "build:{{OS}}"
+
+  build:windows:
+    internal: true
+    platforms: [windows]
+    cmds:
+      - go build -ldflags="-s -w -H windowsgui" -o ./wwtool.exe .
+
+  build:linux:
+    internal: true
+    platforms: [linux]
+    cmds:
+      - go build -ldflags="-s -w" -o ./wwtool .
+
+  build:android:
+    desc: 打包安卓应用，需要安装ndk，并设置ANDROID_NDK_HOME 环境变量
+    cmd: fyne package -os android -app-id cn.bingxl.wwtool -icon Icon.ico
 
