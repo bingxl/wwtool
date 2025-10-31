@@ -17,7 +17,7 @@ import (
 
 const (
 	appID = "wwtool"
-	debug = false
+	debug = true
 )
 
 func main() {
@@ -41,6 +41,8 @@ func main() {
 	// setFont()
 	a := app.NewWithID(appID)
 	w := a.NewWindow("ww tool")
+	model.SetAppStorageRoot(a.Storage().RootURI())
+	slog.Debug("fyne app root storage", "storage", a.Storage().RootURI())
 
 	// 设置应用的生命周期事件处理函数
 	viewmodel.SetLifecycle(&a)

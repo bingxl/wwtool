@@ -3,8 +3,6 @@ package model
 import (
 	"embed"
 	"log/slog"
-	"os"
-	"path/filepath"
 
 	"gopkg.in/yaml.v3"
 )
@@ -69,22 +67,15 @@ func LoadConfig() (*Config, error) {
 	if globalConfig != nil {
 		return globalConfig, nil
 	}
-	cacheDir, _ := os.UserCacheDir()
-	configFile = filepath.Join(cacheDir, appUniqueID, "config.yaml")
-
-	slog.Debug("config var",
-		"configFile", configFile,
-		"appUniqueID", appUniqueID,
-	)
 
 	// 配置文件不存在，使用默认配置
-	if _, err := os.Lstat(configFile); os.IsNotExist(err) {
+	if !ConfigFileIsExists() {
 		globalConfig = loadDefault()
 		return globalConfig, nil
 	}
 
 	// 读取配置文件
-	data, err := os.ReadFile(configFile)
+	data, err := ReadConfigFile()
 	if err != nil {
 		return &Config{}, nil
 	}
@@ -104,5 +95,5 @@ func SaveConfig() error {
 		return err
 	}
 
-	return os.WriteFile(configFile, data, 0644)
+	return WriteConfigToStorage(data)
 }
