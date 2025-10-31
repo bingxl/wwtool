@@ -3,15 +3,16 @@ package kujiequ
 // 库街区相关功能
 
 import (
+	"bytes"
 	"encoding/json"
 	"fmt"
 	"log/slog"
 	"maps"
-	"net/http"
 	"net/url"
 	"strconv"
 	"strings"
 	"time"
+	"wuwa/req"
 )
 
 // -------start api config
@@ -75,13 +76,7 @@ func (k *KujieQu) SetToken(token string, devcode string) {
 func (k *KujieQu) FindRole(gameId int) ([]RoleInfo, error) {
 	url := Apis["findRoles"]
 	// 设置 body
-	req, err := http.NewRequest("POST", url, strings.NewReader(fmt.Sprintf("gameId=%d", gameId)))
-	if err != nil {
-		return nil, err
-	}
-
-	// 设置请求头
-	headers := map[string]string{
+	headers := map[string]any{
 		"token":           k.token,
 		"osversion":       "Android",
 		"devcode":         k.devcode,
@@ -96,27 +91,19 @@ func (k *KujieQu) FindRole(gameId int) ([]RoleInfo, error) {
 		"accept-encoding": "gzip",
 		"user-agent":      k.headers["user-agent"],
 	}
-	for k, v := range headers {
-		req.Header.Set(k, v)
-	}
 
-	client := &http.Client{}
-	resp, err := client.Do(req)
-
+	body, err := req.Post(url, headers, strings.NewReader(fmt.Sprintf("gameId=%d", gameId)))
+	// req, err := http.NewRequest("POST", url, strings.NewReader(fmt.Sprintf("gameId=%d", gameId)))
 	if err != nil {
 		return nil, err
-	}
-	defer resp.Body.Close()
-	if resp.StatusCode != 200 {
-		return nil, fmt.Errorf("请求失败, httpCode: %d", resp.StatusCode)
 	}
 
 	var resBody KujieQuResponse[[]RoleInfo]
-	err = json.NewDecoder(resp.Body).Decode(&resBody)
+	err = json.NewDecoder(bytes.NewReader(body)).Decode(&resBody)
 	if err != nil {
 		return nil, err
 	}
-	slog.Debug(fmt.Sprintf("response: %+v", resBody))
+
 	if resBody.Success {
 		var roles []RoleInfo
 		for _, v := range resBody.Data {
@@ -172,22 +159,8 @@ func (k *KujieQu) Sign(role RoleInfo) string {
 	}
 	// slog.Info("开始签到----", "roleName", role.RoleName)
 	reqUrl := Apis["sign"]
-
-	// 设置 body
-	payload := url.Values{
-		"roleId":   {role.RoleId},
-		"serverId": {role.ServerId},
-		"gameId":   {strconv.Itoa(role.GameId)},
-		"userId":   {role.UserId},
-		"reqMonth": {time.Now().Format("01")},
-	}
-	// slog.Info("in sign payload", "payload", payload.Encode())
-	req, err := http.NewRequest("POST", reqUrl, strings.NewReader(payload.Encode()))
-	if err != nil {
-		return err.Error()
-	}
 	// 设置请求头
-	headers := map[string]string{
+	headers := map[string]any{
 		"token":              k.token,
 		"sec-ch-ua":          "\"Not)A;Brand\";v=\"99\", \"Android WebView\";v=\"127\", \"Chromium\";v=\"127\"",
 		"source":             "android",
@@ -200,22 +173,22 @@ func (k *KujieQu) Sign(role RoleInfo) string {
 		"x-requested-with":   "com.kurogame.kjq",
 		"accept-language":    "zh-CN,zh;q=0.9,en-US;q=0.8,en;q=0.7",
 	}
-
-	for k, v := range headers {
-		req.Header.Set(k, v)
+	// 设置 body
+	payload := url.Values{
+		"roleId":   {role.RoleId},
+		"serverId": {role.ServerId},
+		"gameId":   {strconv.Itoa(role.GameId)},
+		"userId":   {role.UserId},
+		"reqMonth": {time.Now().Format("01")},
 	}
-
-	client := &http.Client{}
-	resp, err := client.Do(req)
+	// slog.Info("in sign payload", "payload", payload.Encode())
+	body, err := req.Post(reqUrl, headers, strings.NewReader(payload.Encode()))
 	if err != nil {
-		return "发送请求失败" + err.Error()
+		return err.Error()
 	}
-	defer resp.Body.Close()
-	if resp.StatusCode != 200 {
-		return "响应代码不为200"
-	}
+
 	var resBody KujieQuResponse[any]
-	err = json.NewDecoder(resp.Body).Decode(&resBody)
+	err = json.NewDecoder(bytes.NewReader(body)).Decode(&resBody)
 	if err != nil {
 		return "解析响应失败" + err.Error()
 	}
@@ -226,11 +199,7 @@ func (k *KujieQu) Sign(role RoleInfo) string {
 // 库街区社区签到
 func (k *KujieQu) BbsSign() string {
 	api := Apis["bbsSign"]
-	req, err := http.NewRequest("POST", api, strings.NewReader("gameId=2"))
-	if err != nil {
-		return fmt.Errorf("创建请求失败: %v", err).Error()
-	}
-	headers := map[string]string{
+	headers := map[string]any{
 		"token":        k.token,
 		"osversion":    "Android",
 		"devcode":      k.devcode,
@@ -245,19 +214,13 @@ func (k *KujieQu) BbsSign() string {
 		"content-type": "application/x-www-form-urlencoded",
 		"user-agent":   k.headers["user-agent"],
 	}
-	for k, v := range headers {
-		req.Header.Set(k, v)
-	}
-	client := &http.Client{}
-	resp, err := client.Do(req)
+
+	body, err := req.Post(api, headers, strings.NewReader("gameId=2"))
 	if err != nil {
-		return err.Error()
+		return fmt.Errorf("创建请求失败: %v", err).Error()
 	}
-	defer resp.Body.Close()
-
 	var resBody KujieQuResponse[any]
-
-	err = json.NewDecoder(resp.Body).Decode(&resBody)
+	err = json.NewDecoder(bytes.NewReader(body)).Decode(&resBody)
 	if err != nil {
 		return "解析响应失败" + err.Error()
 	}

@@ -5,17 +5,16 @@ import (
 	"encoding/json"
 	"errors"
 	"fmt"
-	"io"
 	"log/slog"
-	"net/http"
 	"net/url"
 	"slices"
+	"wuwa/req"
 )
 
 // 库街区鸣潮 小卡片
 
-func widgetRequestHeader(token string) (h map[string]string) {
-	h = map[string]string{
+func widgetRequestHeader(token string) (h map[string]any) {
+	h = map[string]any{
 		"token":              token,
 		"source":             "android",
 		"sec-ch-ua-mobile":   "?1",
@@ -47,36 +46,17 @@ func (k *KujieQu) GetWidget(role RoleInfo) (widgetData WidgetResponseData, err e
 	}
 
 	slog.Debug("info", "role", role)
+	headers := widgetRequestHeader(k.token)
 
-	req, err := http.NewRequest("POST", api, bytes.NewBufferString(payload.Encode()))
+	body, err := req.Post(api, headers, bytes.NewBufferString(payload.Encode()))
 
 	if err != nil {
 		errMsg := fmt.Sprintf("获取鸣潮小卡片失败 角色名:%s, err: %s", role.RoleName, err.Error())
-
 		return widgetData, errors.New(errMsg)
 	}
-	headers := widgetRequestHeader(k.token)
-	for k, v := range headers {
-		req.Header.Set(k, v)
-	}
-	// slog.Info("headers", "headers", req.Header)
-	// return
-
-	client := &http.Client{}
-	resp, err := client.Do(req)
-	if err != nil {
-		return
-	}
-	defer resp.Body.Close()
 
 	var resBody KujieQuResponse[WidgetResponseData]
-
-	bodyBytes, err := io.ReadAll(resp.Body)
-	if err != nil {
-		return
-	}
-	slog.Debug("get widget raw data: " + string(bodyBytes))
-	err = json.NewDecoder(bytes.NewReader(bodyBytes)).Decode(&resBody)
+	err = json.NewDecoder(bytes.NewReader(body)).Decode(&resBody)
 	if err != nil {
 		return
 	}
