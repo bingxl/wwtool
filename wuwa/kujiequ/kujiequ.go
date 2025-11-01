@@ -25,14 +25,20 @@ var Apis = map[string]string{
 	"bbsSign":      KujiequHost + "/user/signIn",                // bbs签到
 	"wuwaWidget":   KujiequHost + "/gamer/widget/game3/refresh", // 鸣潮小组件
 	"punishWidget": KujiequHost + "/gamer/widget/game2/refresh", // 站双小组件
+
+	// 鸣潮资源简报
+	"wuwaResourcePeriod":  KujiequHost + "/aki/resource/period/list", // 鸣潮资源简报索引
+	"wuwaResourceMonth":   KujiequHost + "/aki/resource/month",       // 鸣潮每月资源简报
+	"wuwaResourceWeek":    KujiequHost + "/aki/resource/week",        // 鸣潮每周资源简报
+	"wuwaResourceVersion": KujiequHost + "/aki/resource/version",     // 鸣潮版本资源简报
 }
 
 // -------end api config
 
 // -------start 常量/变量定义
 var (
-	GameIds   = []int{2, 3}
-	GameNames = map[int]string{
+	GAME_IDS   = []int{2, 3}
+	GAME_NAMES = map[int]string{
 		2: "战双",
 		3: "鸣潮",
 	}
@@ -128,7 +134,7 @@ func (k *KujieQu) FindAllRoles(args ...bool) ([]RoleInfo, error) {
 	}
 
 	var roles []RoleInfo
-	for _, v := range GameIds {
+	for _, v := range GAME_IDS {
 		roleInfos, err := k.FindRole(v)
 		if err != nil {
 			slog.Error(err.Error())
@@ -256,7 +262,7 @@ func StartSign(tokens []Token, headers map[string]string) string {
 		for _, role := range roles {
 			slog.Info("-------开始签到", "gameId", role.GameId, "roleName", role.RoleName)
 			r := k.Sign(role)
-			info := fmt.Sprintf("%v:%v => %v", GameNames[role.GameId], role.RoleName, r)
+			info := fmt.Sprintf("%v:%v => %v", GAME_NAMES[role.GameId], role.RoleName, r)
 			slog.Info(r)
 			ret += info + "\n"
 			// 每个角色签到间隔1毫秒，防止请求过于频繁
