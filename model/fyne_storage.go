@@ -29,6 +29,10 @@ func ConfigFileIsExists() bool {
 }
 
 func ReadConfigFile() (data []byte, err error) {
+	slog.Debug("config fyne.URI ", "name", configFileURI.Name(), "string", configFileURI.String(),
+		"path", configFileURI.Path(), "extension", configFileURI.Extension(),
+		"scheme", configFileURI.Scheme(),
+	)
 	if !ConfigFileIsExists() {
 		return nil, fmt.Errorf("配置文件不存在，或者不能读取")
 	}

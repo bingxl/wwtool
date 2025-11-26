@@ -57,6 +57,7 @@ func changeServerUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObje
 	server := []fyne.CanvasObject{
 		title("官服/b服切换"),
 		layout.NewSpacer(),
+		layout.NewSpacer(),
 	}
 	change := func(serverName string) {
 		err := vm.CreateLinkToServer(serverName)
@@ -70,14 +71,14 @@ func changeServerUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObje
 		ShowInfoWithAutoClose(T("切服结果"), info, win)
 	}
 	for serverName := range vm.LinkServers {
-		item := widget.NewButton(T("切换到%s", T(serverName)), func() {
+		item := widget.NewButton(T(serverName), func() {
 			change(serverName)
 		})
 		item.Importance = widget.HighImportance
 		server = append(server, item)
 	}
 
-	return container.NewGridWithColumns(2, server...)
+	return container.NewGridWithColumns(3, server...)
 }
 
 // 获取抽卡链接 UI

@@ -67,7 +67,10 @@ func LoadConfig() (*Config, error) {
 	if globalConfig != nil {
 		return globalConfig, nil
 	}
-
+	slog.Debug("config fyne.URI ", "name", configFileURI.Name(), "string", configFileURI.String(),
+		"path", configFileURI.Path(), "extension", configFileURI.Extension(),
+		"scheme", configFileURI.Scheme(),
+	)
 	// 配置文件不存在，使用默认配置
 	if !ConfigFileIsExists() {
 		globalConfig = loadDefault()

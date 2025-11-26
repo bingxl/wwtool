@@ -8,6 +8,7 @@ exe-name: "Wuthering Waves.exe"
 link-servers:
     bilibili服: KrPcSdk_Mainland_bilibili
     官服: KrPcSdk_Mainland_official
+    weGame: KrPcSdk_Mainland_wegame
 
 link-src-path: Client/Binaries/Win64/ThirdParty/KrPcSdk_Mainland
 

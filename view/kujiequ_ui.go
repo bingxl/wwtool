@@ -105,9 +105,10 @@ func widgetGridObj(vm *viewmodel.KujiequViewModel) fyne.CanvasObject {
 
 	nameAlias := func(name string) string {
 		alias := map[string]string{
-			"逆境深塔·深境区":  "深塔",
-			"冥歌海墟·禁忌海域": "海墟",
-			"千道门扉的异想":   "千道门扉",
+			"逆境深塔·深境区":   "深塔",
+			"冥歌海墟·禁忌海域":  "海墟",
+			"冥歌海墟·再生-湍渊": "湍渊",
+			"千道门扉的异想":    "千道门扉",
 		}
 		if aliasName, ok := alias[name]; ok {
 			return aliasName
@@ -117,8 +118,13 @@ func widgetGridObj(vm *viewmodel.KujiequViewModel) fyne.CanvasObject {
 	itemRender := func(items ...kujiequ.WidgetItemData) []fyne.CanvasObject {
 		renders := make([]fyne.CanvasObject, len(items))
 		for index, item := range items {
+			cur := item.Cur
+			if item.Name == "战歌重奏" {
+				// 战歌重奏 特例处理
+				cur = item.Total - item.Cur
+			}
 			renders[index] = widget.NewLabel(
-				fmt.Sprintf("%s: %d/%d", nameAlias(item.Name), item.Cur, item.Total),
+				fmt.Sprintf("%s: %d/%d", nameAlias(item.Name), cur, item.Total),
 			)
 		}
 
