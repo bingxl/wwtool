@@ -24,6 +24,10 @@ func KujiequUI(win fyne.Window) fyne.CanvasObject {
 			slog.Info("选中的token", "token", selected)
 		},
 	)
+	initSelected, err := vm.BindSelectedKujiequToken.Get()
+	if err == nil && initSelected != "" {
+		selectWidget.SetSelected(initSelected)
+	}
 	updateSelect := func() {
 		selectWidget.SetOptions(vm.GetTokens())
 		selectWidget.Refresh()

@@ -17,12 +17,17 @@ import (
 func GameSelectorUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObject {
 	// 创建一个选择框，显示游戏路径列表
 	selectWidget := widget.NewSelect(
-		[]string{},
+		vm.GetGameNames(),
 		func(selected string) {
 			vm.SetSelectedID(selected)
 			slog.Info("选中路径", "path", selected, "id", vm.BindGameSelectedIndex)
 		},
 	)
+	initSelected, err := vm.BindGameSelectedIndex.Get()
+	if err == nil && initSelected >= 0 {
+		selectWidget.SetSelectedIndex(initSelected)
+	}
+
 	vm.BindGameNames.AddListener(binding.NewDataListener(func() {
 		games, err := vm.BindGameNames.Get()
 		if err == nil {
