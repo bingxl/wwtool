@@ -32,6 +32,8 @@ type Config struct {
 	LinkSrcPath      string            `yaml:"link-src-path"`      // 软链接源路径,相对于游戏跟目录
 	ThirdTools       []string          `yaml:"third-tools"`        // 小工具
 	Tokens           []KujiequToken    `yaml:"tokens"`             // 库街区token
+
+	GenshinPath string `yaml:"genshin-path"` // 原神游戏路径
 }
 
 var (

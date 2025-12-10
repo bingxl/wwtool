@@ -3,6 +3,7 @@ game-paths:
       path: C:/Program Files/Wuthering Waves/Wuthering Waves Game
       has-multiple-server: true
       
+genshin-path: "C:/Program Files/Genshin Impact/Genshin Impact Game/YuanShen.exe"
 last-selected-path: 0
 exe-name: "Wuthering Waves.exe"
 link-servers:

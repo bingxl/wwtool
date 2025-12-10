@@ -14,9 +14,13 @@ import (
 func BuildUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObject {
 	var box []*container.TabItem
 	if runtime.GOOS == "windows" {
-		box = append(box, container.NewTabItem(T("主页"), HomeUI(win, vm)))
+		box = append(box,
+			container.NewTabItem(T("鸣潮"), HomeUI(win, vm)),
+			container.NewTabItem(T("原神"), GenshinUI(win)),
+		)
 	}
 	box = append(box,
+
 		container.NewTabItem(T("库街区"), KujiequUI(win)),
 		container.NewTabItem(T("工具"), ThirdToolSelectorUI(win)),
 		container.NewTabItem(T("帮助"), HelpUI()),

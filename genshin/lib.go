@@ -3,7 +3,6 @@ package genshin
 // 原神切换服工具
 import (
 	"fmt"
-	"os"
 	"path/filepath"
 
 	"gopkg.in/ini.v1"
@@ -13,20 +12,7 @@ type Lib struct {
 	GameFile string `json:"game_file"`
 	// 游戏路径
 	GamePath string `json:"game_path"`
-
-	// 存放配置文件与资源的路径
-	ConfigPath string
-	Log        func(...any)
-}
-
-func (lib *Lib) Init() {
-
-}
-func (lib *Lib) SetConfigPath(configPath string) {
-	if configPath == "" {
-		return
-	}
-	lib.ConfigPath = configPath
+	Log      func(...any)
 }
 
 // 设置游戏可执行路径
@@ -53,7 +39,8 @@ func (lib *Lib) ServerConfig(serverName byte) {
 		return
 	}
 	// 将B服专用SDK复制到游戏目录下
-	lib.cpBiliBiliSDK(serverName != 'b')
+	// 切换到官服后现在不会删除sdk， 所以省略以下步骤
+	// lib.cpBiliBiliSDK(serverName != 'b')
 
 	changes := map[string]string{
 		"channel":     modify[0],
@@ -97,43 +84,6 @@ func (lib *Lib) ServerConfig(serverName byte) {
 	}
 
 	lib.logInfo(gameConfigPath, "已更新并保存游戏配置文件")
-}
-
-// 目标为 B 服时如果游戏目录下没有SDK则拷贝SDK，为官服时若游戏目录下有 SDK 则删除
-func (lib *Lib) cpBiliBiliSDK(remove bool) {
-	// 将sdk移动到对应位置， 此sdk为b服专有
-	sdkSourcePath := lib.ConfigPath
-	sdkFileName := "PCGameSDK.dll"
-	sourcePath := filepath.Join(sdkSourcePath, sdkFileName)
-	targetPath := filepath.Join(lib.GamePath, "YuanShen_Data", "Plugins", sdkFileName)
-
-	// 判断文件是否存在
-	_, err := os.Stat(targetPath)
-	sdkHasExist := os.IsExist(err)
-
-	if remove && sdkHasExist {
-		lib.logInfo("移除B服SDK文件")
-		os.Remove(targetPath)
-		return
-	}
-
-	// 需要copy SDK 且 SDK 不存在
-	if !remove && !sdkHasExist {
-		content, err := os.ReadFile(sourcePath)
-		if err != nil {
-			// 读取错误处理
-			lib.logInfo("读取 PCGameSDK.dll 文件失败, 请将此文件移动到")
-			lib.logInfo("     " + sdkSourcePath)
-		}
-		err = os.WriteFile(targetPath, content, 0755)
-		if err != nil {
-			// 写文件出错处理
-			lib.logInfo("SDK 写入游戏目录失败", err)
-		}
-
-		lib.logInfo("B服SDK已复制")
-	}
-
 }
 
 // 将数据显示到界面中
