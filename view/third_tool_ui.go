@@ -51,7 +51,7 @@ func ThirdToolSelectorUI(win fyne.Window) fyne.CanvasObject {
 	return container.NewVBox(
 		addThirdToolUI(win, &vm),
 		widget.NewSeparator(),
-		title("选择与操作游戏"),
+		Title("选择与操作游戏"),
 		container.NewGridWithColumns(
 			3,
 			selectWidget,

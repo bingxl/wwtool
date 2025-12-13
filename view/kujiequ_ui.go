@@ -83,7 +83,7 @@ func KujiequUI(win fyne.Window) fyne.CanvasObject {
 		// 1,
 		addTokenUI(win, &vm, onAddToken),
 		widget.NewSeparator(),
-		title("选择token"),
+		Title("选择token"),
 		container.NewGridWithColumns(
 			4,
 			selectWidget,

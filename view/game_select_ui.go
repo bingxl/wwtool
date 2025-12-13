@@ -86,7 +86,7 @@ func GameSelectorUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObje
 	return container.NewVBox(
 		addGameUI(win, vm),
 		widget.NewSeparator(),
-		title("选择与操作游戏"),
+		Title("选择与操作游戏"),
 		container.NewGridWithColumns(
 			4,
 			selectWidget,

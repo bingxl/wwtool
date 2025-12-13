@@ -39,27 +39,13 @@ func HomeUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObject {
 	)
 }
 
-// title
-//
-// 传入的title 会自动调用 T 翻译
-func title(title string) fyne.CanvasObject {
-	return widget.NewLabelWithStyle(
-		T(title),
-		fyne.TextAlignLeading,
-		fyne.TextStyle{
-			Bold:   true,
-			Italic: true,
-		},
-	)
-}
-
 // changeServerUI 创建软链接服务器管理界面
 // 提供添加、删除软链接的功能
 // 软链接格式为 {name: path}，name 是服务器简称，path 是软链接路径
 // 选中某个服务器后，可以删除或修改其软链接路径
 func changeServerUI(win fyne.Window, vm *viewmodel.AppViewModel) fyne.CanvasObject {
 	server := []fyne.CanvasObject{
-		title("官服/b服切换"),
+		Title("官服/b服切换"),
 		layout.NewSpacer(),
 		layout.NewSpacer(),
 	}

@@ -5,7 +5,22 @@ import (
 
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/dialog"
+	"fyne.io/fyne/v2/widget"
 )
+
+// Title
+//
+// 传入的Title 会自动调用 T 翻译
+func Title(title string) fyne.CanvasObject {
+	return widget.NewLabelWithStyle(
+		T(title),
+		fyne.TextAlignLeading,
+		fyne.TextStyle{
+			Bold:   true,
+			Italic: true,
+		},
+	)
+}
 
 // ShowFolderOpen 弹出文件夹选择对话框，返回用户选择的文件夹路径或错误
 // 如果用户取消选择，则返回空字符串和 nil 错误

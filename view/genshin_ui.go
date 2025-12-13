@@ -1,8 +1,6 @@
 package view
 
 import (
-	"errors"
-
 	"fyne.io/fyne/v2"
 	"fyne.io/fyne/v2/container"
 	"fyne.io/fyne/v2/dialog"
@@ -32,13 +30,13 @@ func GenshinUI(win fyne.Window) fyne.CanvasObject {
 	changeServerBtn := func(serverName byte, serverDisplayName string) *widget.Button {
 		btn := widget.NewButton(i18n.T("切换到%s", serverDisplayName), func() {
 			if v, _ := vm.GenshinPath.Get(); v == "" {
-				dialog.ShowError(errors.New(i18n.T("请先选择游戏文件路径")), win)
+				ShowInfoWithAutoClose("warning", i18n.T("请先选择游戏文件路径"), win)
 				return
 			}
 
 			vm.SwitchServer(serverName)
 
-			dialog.ShowInformation(
+			ShowInfoWithAutoClose(
 				i18n.T("切换成功"),
 				i18n.T("已切换到%s服务器", serverDisplayName),
 				win,
@@ -53,7 +51,7 @@ func GenshinUI(win fyne.Window) fyne.CanvasObject {
 
 	// 布局
 	fileSelectContainer := container.NewVBox(
-		title(i18n.T("原神游戏设置")),
+		Title(i18n.T("原神游戏设置")),
 
 		selectFileBtn,
 		widget.NewLabelWithData(vm.GenshinPath),
@@ -61,7 +59,7 @@ func GenshinUI(win fyne.Window) fyne.CanvasObject {
 	)
 
 	serverContainer := container.NewVBox(
-		title(i18n.T("服务器切换")),
+		Title(i18n.T("服务器切换")),
 		container.NewHBox(officialBtn, bilibiliBtn),
 		widget.NewSeparator(),
 	)
