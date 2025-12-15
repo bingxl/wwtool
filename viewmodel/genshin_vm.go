@@ -2,6 +2,7 @@ package viewmodel
 
 import (
 	"wwtool/genshin"
+	"wwtool/lib"
 	"wwtool/model"
 
 	"fyne.io/fyne/v2/data/binding"
@@ -23,6 +24,14 @@ func (vm *GenshinViewModel) SetGenshinPath(name string) {
 // 切换原神服务器
 func (vm *GenshinViewModel) SwitchServer(server byte) {
 	vm.genshinLib.ServerConfig(server)
+}
+func (vm *GenshinViewModel) RunGenshin() (err error) {
+	exe, err := vm.GenshinPath.Get()
+	if err != nil || len(exe) == 0 {
+		return
+	}
+	_, err = lib.RunExe(exe, true)
+	return
 }
 
 func NewGenshinViewModel() *GenshinViewModel {

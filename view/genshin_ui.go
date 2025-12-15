@@ -25,6 +25,15 @@ func GenshinUI(win fyne.Window) fyne.CanvasObject {
 			}
 		}, win)
 	})
+	runGenshinBtn := widget.NewButton(i18n.T("运行原神游戏"), func() {
+		err := vm.RunGenshin()
+		info := "已发送运行指令"
+		if err != nil {
+			info = "运行原神游戏失败: " + err.Error()
+		}
+		ShowInfoWithAutoClose("info", info, win)
+	})
+	runGenshinBtn.Importance = widget.HighImportance
 
 	// 服务器切换按钮
 	changeServerBtn := func(serverName byte, serverDisplayName string) *widget.Button {
@@ -52,15 +61,14 @@ func GenshinUI(win fyne.Window) fyne.CanvasObject {
 	// 布局
 	fileSelectContainer := container.NewVBox(
 		Title(i18n.T("原神游戏设置")),
-
-		selectFileBtn,
+		container.NewGridWithColumns(2, selectFileBtn, runGenshinBtn),
 		widget.NewLabelWithData(vm.GenshinPath),
 		widget.NewSeparator(),
 	)
 
 	serverContainer := container.NewVBox(
 		Title(i18n.T("服务器切换")),
-		container.NewHBox(officialBtn, bilibiliBtn),
+		container.NewGridWithColumns(2, officialBtn, bilibiliBtn),
 		widget.NewSeparator(),
 	)
 
